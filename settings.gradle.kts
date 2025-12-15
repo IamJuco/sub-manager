@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "submanager"
 include(":app")
 include(":core:designsystem")
+include(":feature:main")
