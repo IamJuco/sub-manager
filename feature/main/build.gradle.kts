@@ -13,6 +13,7 @@ android {
 dependencies {
     implementation(projects.feature.home)
     implementation(projects.core.designsystem)
+    implementation(projects.core.common)
 
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
