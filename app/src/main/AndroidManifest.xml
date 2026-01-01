@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Submanager">
         <activity
-            android:name=".MainActivity"
+            android:name="com.juco.main.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Submanager">
