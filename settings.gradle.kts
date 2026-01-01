@@ -24,6 +24,7 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "submanager"
 include(":app")
 include(":core:designsystem")
+include(":core:common")
 include(":feature:main")
 include(":feature:home")
 include(":data:local")
