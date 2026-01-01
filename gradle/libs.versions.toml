@@ -18,9 +18,9 @@ androidxAppCompat = "1.7.0"
 androidxRoomCompiler = "2.7.1"
 androidxMultidex = "2.0.1"
 
-kotlin = "2.0.21"
+kotlin = "2.2.0"
 kotlinxImmutable = "0.4.0"
-ksp = "2.1.21-2.0.2"
+ksp = "2.2.0-2.0.2"
 kotlinSerialization = "1.9.0"
 kotlinCoroutine = "1.10.2"
 
