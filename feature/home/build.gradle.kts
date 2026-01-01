@@ -11,5 +11,8 @@ android {
 }
 
 dependencies {
+    implementation(projects.core.designsystem)
+    implementation(projects.core.common)
+
     implementation(libs.androidx.navigation.compose)
 }
