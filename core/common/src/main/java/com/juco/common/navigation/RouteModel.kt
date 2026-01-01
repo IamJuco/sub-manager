@@ -10,4 +10,6 @@ sealed interface MainRouteModel : RouteModel {
     @Serializable
     data object Home : RouteModel
 
+    @Serializable
+    data object Setting : RouteModel
 }
