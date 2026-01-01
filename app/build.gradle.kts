@@ -17,11 +17,7 @@ android {
 
 dependencies {
     implementation(projects.feature.main)
-    implementation(projects.feature.home)
-    implementation(projects.core.designsystem)
     implementation(projects.data.local)
-    implementation(projects.domain.local)
-
 
     implementation(libs.androidx.appcompat)
     implementation(libs.timber)
