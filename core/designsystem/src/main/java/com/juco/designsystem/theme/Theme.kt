@@ -11,22 +11,31 @@ import androidx.compose.runtime.staticCompositionLocalOf
 private val LocalSubManagerColors = staticCompositionLocalOf<SubManagerColors> {
     error("No SubManagerColors provided")
 }
+private val LocalSubManagerTypography = staticCompositionLocalOf<SubManagerTypography> {
+    error("No SubManagerTypography provided")
+}
 
 object SubManagerTheme {
     val colors: SubManagerColors
-    @Composable
-    @ReadOnlyComposable
-    get() = LocalSubManagerColors.current
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalSubManagerColors.current
+    val typography: SubManagerTypography
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalSubManagerTypography.current
 }
 
 @Composable
 fun ProvideSubManagerColors(
     colors: SubManagerColors,
+    typography: SubManagerTypography,
     content: @Composable () -> Unit
 ) {
     val provideColors = remember { colors.copy() }.apply { update(colors) }
     CompositionLocalProvider(
         LocalSubManagerColors provides provideColors,
+        LocalSubManagerTypography provides typography,
         content = content
     )
 }
@@ -36,6 +45,7 @@ fun SubManagerTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
+    val typography = typography()
     val colors = if (darkTheme) {
         SubManagerDarkColors()
     } else {
@@ -43,7 +53,8 @@ fun SubManagerTheme(
     }
 
     ProvideSubManagerColors(
-        colors = colors
+        colors = colors,
+        typography = typography
     ) {
         MaterialTheme(
             content = content
