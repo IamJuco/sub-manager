@@ -10,5 +10,6 @@ android {
 }
 
 dependencies {
+    implementation(libs.timber)
     implementation(libs.kotlinx.serialization.json)
 }
