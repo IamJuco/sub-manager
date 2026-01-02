@@ -9,7 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.juco.designsystem.theme.SubmanagerTheme
+import com.juco.designsystem.theme.SubManagerTheme
 
 @Composable
 fun HomeRoute(
@@ -27,7 +27,10 @@ fun HomeScreen(
     padding: PaddingValues
 ) {
     Column(
-        modifier = modifier.fillMaxSize().padding(padding)
+        modifier = modifier
+            .fillMaxSize()
+            .background(SubManagerTheme.colors.primaryBackground)
+            .padding(padding)
     ) {
         Text(
             text = "홈 화면"
@@ -39,7 +42,7 @@ fun HomeScreen(
 @Composable
 @Preview(showBackground = true)
 private fun HomeScreenPreview() {
-    SubmanagerTheme {
+    SubManagerTheme {
         HomeScreen(
             padding = PaddingValues()
         )
