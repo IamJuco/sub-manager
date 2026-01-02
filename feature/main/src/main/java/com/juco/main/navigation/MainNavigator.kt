@@ -36,6 +36,7 @@ class MainNavigator(
                 inclusive = menu == MainMenu.HOME
             }
             launchSingleTop = true
+            restoreState = true
         }
 
         when (menu) {

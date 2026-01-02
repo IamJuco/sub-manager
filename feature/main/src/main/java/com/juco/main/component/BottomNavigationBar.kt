@@ -17,7 +17,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.juco.designsystem.theme.SubManagerTheme
 
 @Composable
 fun BottomNavigationBar(
@@ -29,7 +31,7 @@ fun BottomNavigationBar(
         modifier = modifier
     ) {
         Box(
-            modifier = Modifier.fillMaxWidth().background(Color(0xffFFFFFF))
+            modifier = Modifier.fillMaxWidth().background(SubManagerTheme.colors.primaryBackground)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth().height(48.dp)
@@ -54,11 +56,34 @@ fun BottomNavigationBar(
                                 else menu.iconResIdFalse
                             ),
                             contentDescription = menu.contentDescription,
-                            modifier = Modifier.size(32.dp)
+                            modifier = Modifier.size(32.dp),
+                            tint = SubManagerTheme.colors.primaryText
                         )
                     }
                 }
             }
         }
+    }
+}
+
+@Composable
+@Preview(showBackground = false)
+private fun BottomNavigationBarHomePreview() {
+    SubManagerTheme {
+        BottomNavigationBar(
+            currentMenu = MainMenu.HOME,
+            onMenuSelected = {}
+        )
+    }
+}
+
+@Composable
+@Preview(showBackground = false)
+private fun BottomNavigationBarSettingPreview() {
+    SubManagerTheme {
+        BottomNavigationBar(
+            currentMenu = MainMenu.SETTING,
+            onMenuSelected = {}
+        )
     }
 }

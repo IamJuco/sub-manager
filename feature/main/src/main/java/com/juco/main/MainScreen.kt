@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import com.juco.designsystem.theme.SubManagerTheme
 import com.juco.main.component.BottomNavigationBar
 import com.juco.main.navigation.MainNavHost
 import com.juco.main.navigation.MainNavigator
@@ -30,6 +31,7 @@ fun MainScreen(
     }
 
     Scaffold(
+        containerColor = SubManagerTheme.colors.primaryBackground,
         snackbarHost = { SnackbarHost(snackBarHostState) },
         content = { paddingValues ->
             MainNavHost(
