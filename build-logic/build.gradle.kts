@@ -42,6 +42,11 @@ gradlePlugin {
             implementationClass = "com.juco.build_logic.primitive.RetrofitPlugin"
         }
 
+        register("com.juco.build_logic.primitive.RoomPlugin") {
+            id = "com.juco.build_logic.primitive.room"
+            implementationClass = "com.juco.build_logic.primitive.RoomPlugin"
+        }
+
         register("com.juco.build_logic.primitive.OkHttpPlugin") {
             id = "com.juco.build_logic.primitive.okhttp"
             implementationClass = "com.juco.build_logic.primitive.OkHttpPlugin"

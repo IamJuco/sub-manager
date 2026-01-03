@@ -41,6 +41,8 @@ timber = "5.0.1"
 browser = "1.8.0"
 semver = "2.0.0"
 
+room = "2.8.4"
+
 [libraries]
 ## androidx
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidxCoreKtx" }
@@ -109,6 +111,11 @@ timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "tim
 
 ## Semver
 semver = { group = "net.swiftzer.semver", name = "semver", version.ref = "semver" }
+
+## Room
+room = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 
 [bundles]
 coroutine = [
