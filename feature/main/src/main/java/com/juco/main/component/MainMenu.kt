@@ -4,7 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
 import com.juco.common.navigation.MainRouteModel
 import com.juco.common.navigation.RouteModel
-import com.juco.submanager.designsystem.R
+import com.juco.submanager.core.designsystem.R
 
 enum class MainMenu (
     @DrawableRes val iconResIdFalse: Int,

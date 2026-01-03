@@ -9,7 +9,7 @@ import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
-import com.juco.submanager.designsystem.R
+import com.juco.submanager.core.designsystem.R
 
 private val pretendardBold = FontFamily(Font(R.font.pretendard_bold, FontWeight.Bold))
 private val pretendardSemiBold = FontFamily(Font(R.font.pretendard_semibold, FontWeight.SemiBold))
