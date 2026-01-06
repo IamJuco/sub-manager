@@ -24,7 +24,7 @@ import com.juco.subscription_add.intro.component.SubscriptionItem
 import com.juco.subscription_add.intro.fake.dummyData
 
 @Composable
-fun SubscriptionAddIntroScreenRoute(
+fun SubscriptionAddIntroRoute(
     padding: PaddingValues,
     viewModel: SubscriptionAddIntroViewModel = hiltViewModel()
 ) {
