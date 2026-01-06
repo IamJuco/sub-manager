@@ -6,17 +6,17 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.juco.common.navigation.RouteModel
-import com.juco.subscription_add.SubscriptionAddRoute
+import com.juco.subscription_add.SubscriptionAddIntroScreenRoute
 
-fun NavController.navigateToSubscriptionAdd(navOptions: NavOptions) {
-    navigate(RouteModel.SubscriptionAdd, navOptions)
+fun NavController.navigateToSubscriptionAddIntro(navOptions: NavOptions) {
+    navigate(RouteModel.SubscriptionAddIntro, navOptions)
 }
 
-fun NavGraphBuilder.subscriptionAddNavGraph(
+fun NavGraphBuilder.subscriptionAddIntroNavGraph(
     padding: PaddingValues
 ) {
-    composable<RouteModel.SubscriptionAdd> {
-        SubscriptionAddRoute(
+    composable<RouteModel.SubscriptionAddIntro> {
+        SubscriptionAddIntroScreenRoute(
             padding = padding
         )
     }

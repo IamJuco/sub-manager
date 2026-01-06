@@ -4,6 +4,9 @@ import kotlinx.serialization.Serializable
 
 sealed interface RouteModel {
     @Serializable
+    data object SubscriptionAddIntro : RouteModel
+
+    @Serializable
     data object SubscriptionAdd : RouteModel
 
 }
