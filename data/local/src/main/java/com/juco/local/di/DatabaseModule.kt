@@ -2,6 +2,8 @@ package com.juco.local.di
 
 import android.content.Context
 import androidx.room.Room
+import com.juco.local.dao.SubscriptionDao
+import com.juco.local.dao.UserDao
 import com.juco.local.database.SubManagerDatabase
 import dagger.Module
 import dagger.Provides
@@ -21,5 +23,17 @@ object DatabaseModule {
             klass = SubManagerDatabase::class.java,
             name = "submanager-db"
         ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserDao(database: SubManagerDatabase): UserDao {
+        return database.userDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideSubscriptionDao(database: SubManagerDatabase): SubscriptionDao {
+        return database.subscriptionDao()
     }
 }
