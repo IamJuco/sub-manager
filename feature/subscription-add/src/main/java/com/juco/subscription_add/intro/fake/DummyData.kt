@@ -1,4 +1,4 @@
-package com.juco.subscription_add.fake
+package com.juco.subscription_add.intro.fake
 
 import com.juco.local.model.Subscription
 

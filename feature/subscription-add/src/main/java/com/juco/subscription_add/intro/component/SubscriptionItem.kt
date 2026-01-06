@@ -1,4 +1,4 @@
-package com.juco.subscription_add.component
+package com.juco.subscription_add.intro.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -16,6 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.juco.designsystem.theme.SubManagerTheme
 import com.juco.local.model.Subscription
+import java.text.NumberFormat
 
 @Composable
 fun SubscriptionItem(
@@ -77,7 +78,7 @@ fun SubscriptionItem(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "${java.text.NumberFormat.getIntegerInstance().format(subscription.price)}원",
+                text = "${NumberFormat.getIntegerInstance().format(subscription.price)}원",
                 style = SubManagerTheme.typography.c1Regular,
                 color = SubManagerTheme.colors.secondaryText,
                 maxLines = 1,

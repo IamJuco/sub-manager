@@ -13,7 +13,7 @@ import com.juco.common.navigation.MainRouteModel
 import com.juco.common.navigation.RouteModel
 import com.juco.home.navigation.navigateToHome
 import com.juco.main.component.MainMenu
-import com.juco.subscription_add.navigation.navigateToSubscriptionAddIntro
+import com.juco.subscription_add.intro.navigation.navigateToSubscriptionAddIntro
 
 class MainNavigator(
     val navController: NavHostController

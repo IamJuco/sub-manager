@@ -1,4 +1,4 @@
-package com.juco.subscription_add
+package com.juco.subscription_add.intro
 
 import androidx.lifecycle.ViewModel
 import com.juco.local.repository.LocalRepository

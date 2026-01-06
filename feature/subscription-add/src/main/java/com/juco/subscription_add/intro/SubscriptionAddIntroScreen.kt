@@ -1,4 +1,4 @@
-package com.juco.subscription_add
+package com.juco.subscription_add.intro
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -19,9 +19,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.juco.designsystem.component.SubManagerTopBar
 import com.juco.designsystem.theme.SubManagerTheme
 import com.juco.submanager.core.designsystem.R
-import com.juco.subscription_add.component.SelfAddButton
-import com.juco.subscription_add.component.SubscriptionItem
-import com.juco.subscription_add.fake.dummyData
+import com.juco.subscription_add.intro.component.SelfAddButton
+import com.juco.subscription_add.intro.component.SubscriptionItem
+import com.juco.subscription_add.intro.fake.dummyData
 
 @Composable
 fun SubscriptionAddIntroScreenRoute(

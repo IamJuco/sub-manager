@@ -1,4 +1,4 @@
-package com.juco.subscription_add.component
+package com.juco.subscription_add.intro.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
