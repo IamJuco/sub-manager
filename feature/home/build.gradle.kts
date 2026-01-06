@@ -13,6 +13,7 @@ android {
 dependencies {
     implementation(projects.core.designsystem)
     implementation(projects.core.common)
+    implementation(projects.domain.local)
 
     implementation(libs.androidx.navigation.compose)
 }
