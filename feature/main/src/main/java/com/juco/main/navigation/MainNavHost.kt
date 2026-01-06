@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import com.juco.home.navigation.homeNavGraph
+import com.juco.subscription_add.add.navigation.subscriptionAddNavGraph
 import com.juco.subscription_add.intro.navigation.subscriptionAddIntroNavGraph
 
 @Composable
@@ -23,6 +24,9 @@ fun MainNavHost(
             navigateToSubscriptionAddIntro = navigator::navigateToSubscriptionAddIntro
         )
         subscriptionAddIntroNavGraph(
+            padding = padding
+        )
+        subscriptionAddNavGraph(
             padding = padding
         )
     }
