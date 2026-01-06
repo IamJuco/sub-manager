@@ -3,6 +3,8 @@ package com.juco.common.navigation
 import kotlinx.serialization.Serializable
 
 sealed interface RouteModel {
+    @Serializable
+    data object SubscriptionAdd : RouteModel
 
 }
 

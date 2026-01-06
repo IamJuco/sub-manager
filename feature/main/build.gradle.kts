@@ -1,3 +1,4 @@
+import com.juco.build_logic.dsl.implementation
 import com.juco.build_logic.dsl.setNameSpace
 
 plugins {
@@ -12,6 +13,7 @@ android {
 
 dependencies {
     implementation(projects.feature.home)
+    implementation(projects.feature.subscriptionAdd)
     implementation(projects.core.designsystem)
     implementation(projects.core.common)
 
