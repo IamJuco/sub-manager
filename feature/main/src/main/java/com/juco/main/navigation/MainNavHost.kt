@@ -19,7 +19,8 @@ fun MainNavHost(
         startDestination = navigator.startDestination
     ) {
         homeNavGraph(
-            padding = padding
+            padding = padding,
+            navigateToSubscriptionAddIntro = navigator::navigateToSubscriptionAddIntro
         )
         subscriptionAddIntroNavGraph(
             padding = padding

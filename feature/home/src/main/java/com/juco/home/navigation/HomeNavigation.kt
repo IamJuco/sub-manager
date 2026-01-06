@@ -13,11 +13,14 @@ fun NavController.navigateToHome(navOptions: NavOptions) {
 }
 
 fun NavGraphBuilder.homeNavGraph(
-    padding: PaddingValues
+    padding: PaddingValues,
+    navigateToSubscriptionAddIntro: () -> Unit
 ) {
     composable<MainRouteModel.Home> {
         HomeRoute(
-            padding = padding
+            padding = padding,
+            navigateToSubscriptionAddIntro = navigateToSubscriptionAddIntro
+
         )
     }
 }
