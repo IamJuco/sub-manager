@@ -1,43 +1,19 @@
+import com.juco.build_logic.dsl.setNameSpace
+
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
+    id("com.juco.build_logic.convention.feature")
+    id("com.juco.build_logic.convention.compose")
+    id("com.juco.build_logic.primitive.hilt")
 }
 
 android {
-    namespace = "com.juco.subscription_add"
-    compileSdk = 36
-
-    defaultConfig {
-        minSdk = 26
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-    kotlinOptions {
-        jvmTarget = "11"
-    }
+    setNameSpace("feature.subscription_add")
 }
 
 dependencies {
+    implementation(projects.core.designsystem)
+    implementation(projects.core.common)
+    implementation(projects.domain.local)
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.androidx.navigation.compose)
 }
