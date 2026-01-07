@@ -1,13 +1,11 @@
 package com.juco.main
 
 import android.content.Context
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -43,11 +41,9 @@ fun MainScreen(
         },
         bottomBar = {
             BottomNavigationBar(
-                modifier = Modifier.navigationBarsPadding(),
                 currentMenu = navigator.currentMenu,
                 onMenuSelected = { navigator.navigate(it) }
             )
         }
     )
 }
-
