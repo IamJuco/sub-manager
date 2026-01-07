@@ -2,6 +2,7 @@ package com.juco.subscription_add.intro.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -23,7 +24,8 @@ import com.juco.submanager.core.designsystem.R
 
 @Composable
 fun SelfAddButton(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -37,6 +39,9 @@ fun SelfAddButton(
                 color = SubManagerTheme.colors.primaryText,
                 shape = RoundedCornerShape(24.dp)
             )
+            .clickable {
+                onClick()
+            }
     ) {
         Column(
             modifier = Modifier.padding(16.dp).fillMaxWidth(),
@@ -72,6 +77,8 @@ fun SelfAddButton(
 @Composable
 private fun SelfAddButtonPreview() {
     SubManagerTheme {
-        SelfAddButton()
+        SelfAddButton(
+            onClick = {}
+        )
     }
 }

@@ -26,17 +26,23 @@ import com.juco.subscription_add.intro.fake.dummyData
 @Composable
 fun SubscriptionAddIntroRoute(
     padding: PaddingValues,
+    navigateToSubscriptionAdd: () -> Unit,
+    onPopBackStack: () -> Unit,
     viewModel: SubscriptionAddIntroViewModel = hiltViewModel()
 ) {
     SubscriptionAddIntroScreen(
-        padding = padding
+        padding = padding,
+        navigateToSubscriptionAdd = navigateToSubscriptionAdd,
+        onPopBackStack = onPopBackStack
     )
 }
 
 @Composable
 fun SubscriptionAddIntroScreen(
     modifier: Modifier = Modifier,
-    padding: PaddingValues
+    padding: PaddingValues,
+    navigateToSubscriptionAdd: () -> Unit,
+    onPopBackStack: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -47,13 +53,16 @@ fun SubscriptionAddIntroScreen(
     ) {
         SubManagerTopBar(
             modifier = Modifier.padding(top = 16.dp),
-            title = "구독 추가",
-            iconRes = R.drawable.ic_chevron_left_fill_true
+            title = "구독 추가 메뉴",
+            iconRes = R.drawable.ic_chevron_left_fill_true,
+            onPopBackStack = onPopBackStack
         )
 
         Spacer(Modifier.height(16.dp))
 
-        SelfAddButton()
+        SelfAddButton(
+            onClick = navigateToSubscriptionAdd
+        )
 
         Spacer(Modifier.height(16.dp))
 
@@ -86,7 +95,9 @@ fun SubscriptionAddIntroScreen(
 fun SubscriptionAddScreenPreview() {
     SubManagerTheme {
         SubscriptionAddIntroScreen(
-            padding = PaddingValues()
+            padding = PaddingValues(),
+            navigateToSubscriptionAdd = {},
+            onPopBackStack = {}
         )
     }
 }

@@ -24,7 +24,9 @@ fun MainNavHost(
             navigateToSubscriptionAddIntro = navigator::navigateToSubscriptionAddIntro
         )
         subscriptionAddIntroNavGraph(
-            padding = padding
+            padding = padding,
+            navigateToSubscriptionAdd = navigator::navigateToSubscriptionAdd,
+            onPopBackStack = navigator::popBackStack
         )
         subscriptionAddNavGraph(
             padding = padding
