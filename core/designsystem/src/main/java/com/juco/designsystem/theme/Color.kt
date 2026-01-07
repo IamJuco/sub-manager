@@ -24,6 +24,15 @@ val DividerDark = Color(0xFF374151)
 val ButtonLight = Color(0xFF374151)
 val ButtonDark = Color(0xFFE5E7EB)
 
+val DisabledBackgroundLight = Color(0xFFE5E7EB)
+val DisabledBackgroundDark = Color(0xFF2C2C2E)
+
+val DisabledTextLight = Color(0xFF9CA3AF)
+val DisabledTextDark = Color(0xFF6B7280)
+
+val OutlineLight = Color(0xFFD1D5DB)
+val OutlineDark = Color(0xFF4B5563)
+
 @Stable
 class SubManagerColors(
     primaryBackground: Color,
@@ -31,7 +40,10 @@ class SubManagerColors(
     primaryText: Color,
     secondaryText: Color,
     divider: Color,
-    button: Color
+    button: Color,
+    disabledBackground: Color,
+    disabledText: Color,
+    outline: Color
 ) {
     var primaryBackground by mutableStateOf(primaryBackground)
         private set
@@ -45,14 +57,33 @@ class SubManagerColors(
         private set
     var button by mutableStateOf(button)
         private set
+    var disabledBackground by mutableStateOf(disabledBackground)
+        private set
+    var disabledText by mutableStateOf(disabledText)
+        private set
+    var outline by mutableStateOf(outline)
+        private set
 
-    fun copy(): SubManagerColors = SubManagerColors(
+    fun copy(
+        primaryBackground: Color = this.primaryBackground,
+        secondaryBackground: Color = this.secondaryBackground,
+        primaryText: Color = this.primaryText,
+        secondaryText: Color = this.secondaryText,
+        divider: Color = this.divider,
+        button: Color = this.button,
+        disabledBackground: Color = this.disabledBackground,
+        disabledText: Color = this.disabledText,
+        outline: Color = this.outline
+    ): SubManagerColors = SubManagerColors(
         primaryBackground,
         secondaryBackground,
         primaryText,
         secondaryText,
         divider,
-        button
+        button,
+        disabledBackground,
+        disabledText,
+        outline
     )
 
     fun update(other: SubManagerColors) {
@@ -62,6 +93,9 @@ class SubManagerColors(
         secondaryText = other.secondaryText
         divider = other.divider
         button = other.button
+        disabledBackground = other.disabledBackground
+        disabledText = other.disabledText
+        outline = other.outline
     }
 }
 
@@ -71,14 +105,20 @@ fun SubManagerLightColors(
     PrimaryText: Color = PrimaryTextLight,
     SecondaryText: Color = SecondaryTextLight,
     Divider: Color = DividerLight,
-    Button: Color = ButtonLight
+    Button: Color = ButtonLight,
+    DisabledBackground: Color = DisabledBackgroundLight,
+    DisabledText: Color = DisabledTextLight,
+    Outline: Color = OutlineLight
 ) = SubManagerColors(
     PrimaryBackground,
     SecondaryBackground,
     PrimaryText,
     SecondaryText,
     Divider,
-    Button
+    Button,
+    DisabledBackground,
+    DisabledText,
+    Outline
 )
 
 fun SubManagerDarkColors(
@@ -87,12 +127,18 @@ fun SubManagerDarkColors(
     PrimaryText: Color = PrimaryTextDark,
     SecondaryText: Color = SecondaryTextDark,
     Divider: Color = DividerDark,
-    Button: Color = ButtonDark
+    Button: Color = ButtonDark,
+    DisabledBackground: Color = DisabledBackgroundDark,
+    DisabledText: Color = DisabledTextDark,
+    Outline: Color = OutlineDark
 ) = SubManagerColors(
     PrimaryBackground,
     SecondaryBackground,
     PrimaryText,
     SecondaryText,
     Divider,
-    Button
+    Button,
+    DisabledBackground,
+    DisabledText,
+    Outline
 )
