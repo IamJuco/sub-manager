@@ -12,7 +12,8 @@ fun SubscriptionEntity.toDomain(): Subscription {
         paymentDay = paymentDay,
         paymentCycleType = paymentCycleType,
         paymentCycleValue = paymentCycleValue,
-        description = description
+        description = description,
+        enableNotification = enableNotification
     )
 }
 
@@ -25,6 +26,7 @@ fun Subscription.toEntity(): SubscriptionEntity {
         paymentDay = paymentDay,
         paymentCycleType = paymentCycleType,
         paymentCycleValue = paymentCycleValue,
-        description = description
+        description = description,
+        enableNotification = enableNotification
     )
 }

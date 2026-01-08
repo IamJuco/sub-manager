@@ -8,5 +8,6 @@ data class Subscription(
     val paymentDay: Long,
     val paymentCycleType: String,
     val paymentCycleValue: Int,
-    val description: String? = null
+    val description: String? = null,
+    val enableNotification: Boolean
 )

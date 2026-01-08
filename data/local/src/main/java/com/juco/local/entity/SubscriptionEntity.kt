@@ -12,5 +12,6 @@ data class SubscriptionEntity(
     val paymentDay: Long, // 결제 일 (사용자가 설정한 결제일)
     val paymentCycleType: String, // 결제 주기 (DAY, MONTH, YEAR, NONE)
     val paymentCycleValue: Int, // 결제 주기 값 (설정한 결제 주기 숫자)
-    val description: String? = null // 서비스 설명
+    val description: String? = null, // 서비스 설명
+    val enableNotification: Boolean // 알람 설정 여부
 )
