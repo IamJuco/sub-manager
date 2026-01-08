@@ -10,7 +10,6 @@ val dummySubscriptions = listOf(
         price = 17000,
         paymentDay = 1,
         description = "프리미엄 요금제",
-        totalPrice = 1,
         paymentCycleType = "",
         paymentCycleValue = 1
     ), Subscription(
@@ -20,7 +19,6 @@ val dummySubscriptions = listOf(
         price = 14900,
         paymentDay = 15,
         description = "광고 제거 및 오프라인 저장",
-        totalPrice = 1,
         paymentCycleType = "",
         paymentCycleValue = 1
     ), Subscription(
@@ -30,7 +28,6 @@ val dummySubscriptions = listOf(
         price = 10900,
         paymentDay = 25,
         description = null,
-        totalPrice = 1,
         paymentCycleType = "",
         paymentCycleValue = 1
     ), Subscription(
@@ -40,7 +37,6 @@ val dummySubscriptions = listOf(
         price = 4990,
         paymentDay = 10,
         description = "로켓배송",
-        totalPrice = 1,
         paymentCycleType = "",
         paymentCycleValue = 1
     ), Subscription(
@@ -50,7 +46,6 @@ val dummySubscriptions = listOf(
         price = 62000,
         paymentDay = 28,
         description = "포토샵, 일러스트레이터 사용",
-        totalPrice = 1,
         paymentCycleType = "",
         paymentCycleValue = 1
     ), Subscription(
@@ -60,7 +55,6 @@ val dummySubscriptions = listOf(
         price = 4900,
         paymentDay = 5,
         description = "네이버 페이 적립",
-        totalPrice = 1,
         paymentCycleType = "",
         paymentCycleValue = 1
     ), Subscription(
@@ -70,7 +64,6 @@ val dummySubscriptions = listOf(
         price = 29000,
         paymentDay = 21,
         description = "GPT-4 사용",
-        totalPrice = 1,
         paymentCycleType = "",
         paymentCycleValue = 1
     ), Subscription(
@@ -80,7 +73,6 @@ val dummySubscriptions = listOf(
         price = 9900,
         paymentDay = 12,
         description = null,
-        totalPrice = 1,
         paymentCycleType = "",
         paymentCycleValue = 1
     )

@@ -97,7 +97,6 @@ private fun SubscriptionItemPreview() {
                 name = "Netflix",
                 thumbnail = "NETFLIX",
                 price = 17000,
-                totalPrice = 1,
                 description = "프리미엄",
                 paymentCycleType = "",
                 paymentCycleValue = 1,
