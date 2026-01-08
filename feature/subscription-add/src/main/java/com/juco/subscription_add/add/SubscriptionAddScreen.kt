@@ -1,6 +1,7 @@
 package com.juco.subscription_add.add
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -23,9 +24,12 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.juco.common.util.PaymentCycle
 import com.juco.designsystem.component.SubManagerTopBar
 import com.juco.designsystem.component.button.SubManagerButton
+import com.juco.designsystem.component.loading.SubManagerLoadingBar
 import com.juco.designsystem.theme.SubManagerTheme
 import com.juco.submanager.core.designsystem.R
 import com.juco.subscription_add.add.component.NameInputSection
@@ -33,20 +37,58 @@ import com.juco.subscription_add.add.component.PaymentCycleSection
 import com.juco.subscription_add.add.component.PaymentDateSection
 import com.juco.subscription_add.add.component.PriceInputSection
 import com.juco.subscription_add.add.model.InputStep
+import com.juco.subscription_add.add.model.SubscriptionAdd
+import com.juco.subscription_add.add.sideeffect.SubscriptionAddSideEffect
 
 @Composable
 fun SubscriptionAddRoute(
-    padding: PaddingValues
+    padding: PaddingValues,
+    onShowSnackBar: (String) -> Unit,
+    navigateToHome: () -> Unit,
+    onPopBackStack: () -> Unit,
+    viewModel: SubscriptionAddViewModel = hiltViewModel()
 ) {
-    SubscriptionAddScreen(
-        padding = padding
-    )
+    val uiState by viewModel.state.collectAsStateWithLifecycle()
+
+    LaunchedEffect(viewModel.sideEffect) {
+        viewModel.sideEffect.collect { effect ->
+            when (effect) {
+                is SubscriptionAddSideEffect.NavigateToHome -> {
+                    onShowSnackBar("정보가 저장 되었습니다.")
+                    navigateToHome()
+                }
+                is SubscriptionAddSideEffect.ShowSnackBar -> {
+                    onShowSnackBar(effect.message)
+                }
+            }
+        }
+    }
+
+    Box(
+        modifier = Modifier.fillMaxSize()
+    ) {
+        SubscriptionAddScreen(
+            padding = padding,
+            onPopBackStack = onPopBackStack,
+            onSaveClick = {
+                viewModel.saveSubscription(
+                    subscriptionAdd = it
+                )
+            }
+        )
+        if (uiState.isLoading) {
+            SubManagerLoadingBar()
+        }
+    }
+
 }
 
 @Composable
 fun SubscriptionAddScreen(
     modifier: Modifier = Modifier,
-    padding: PaddingValues
+    padding: PaddingValues,
+    onPopBackStack: () -> Unit,
+    onSaveClick: (SubscriptionAdd) -> Unit
 ) {
     var name by remember { mutableStateOf("") }
     var price by remember { mutableStateOf("") }
@@ -84,7 +126,8 @@ fun SubscriptionAddScreen(
         SubManagerTopBar(
             modifier = Modifier.padding(top = 16.dp),
             title = "구독 서비스 추가",
-            iconRes = R.drawable.ic_chevron_left_fill_true
+            iconRes = R.drawable.ic_chevron_left_fill_true,
+            onPopBackStack = onPopBackStack
         )
 
         Spacer(Modifier.height(32.dp))
@@ -136,7 +179,15 @@ fun SubscriptionAddScreen(
                     InputStep.PRICE -> currentStep = InputStep.DATE
                     InputStep.DATE -> currentStep = InputStep.CYCLE
                     InputStep.CYCLE -> {
-                        // TODO: 여기서 ViewModel 호출하기
+                        onSaveClick(
+                            SubscriptionAdd(
+                                name = name,
+                                price = price.toLongOrNull(),
+                                paymentDay = selectedDate,
+                                paymentCycleType = paymentCycle.type.name,
+                                paymentCycleValue = paymentCycle.value
+                            )
+                        )
                     }
                 }
             }
@@ -151,7 +202,9 @@ fun SubscriptionAddScreen(
 private fun SubscriptionAddScreenPreview() {
     SubManagerTheme {
         SubscriptionAddScreen(
-            padding = PaddingValues()
+            padding = PaddingValues(),
+            onPopBackStack = {},
+            onSaveClick = { SubscriptionAdd() }
         )
     }
 }
