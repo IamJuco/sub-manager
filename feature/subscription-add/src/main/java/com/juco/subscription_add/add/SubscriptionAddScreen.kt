@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.juco.common.model.SubscriptionQuickStartInfo
 import com.juco.common.util.PaymentCycle
 import com.juco.designsystem.component.SubManagerTopBar
 import com.juco.designsystem.component.button.SubManagerButton
@@ -43,6 +44,7 @@ import com.juco.subscription_add.add.sideeffect.SubscriptionAddSideEffect
 @Composable
 fun SubscriptionAddRoute(
     padding: PaddingValues,
+    quickStartInfo: SubscriptionQuickStartInfo?,
     onShowSnackBar: (String) -> Unit,
     navigateToHome: () -> Unit,
     onPopBackStack: () -> Unit,
@@ -70,11 +72,12 @@ fun SubscriptionAddRoute(
         SubscriptionAddScreen(
             padding = padding,
             onPopBackStack = onPopBackStack,
+            quickStartInfo = quickStartInfo,
             onSaveClick = {
                 viewModel.saveSubscription(
                     subscriptionAdd = it
                 )
-            }
+            },
         )
         if (uiState.isLoading) {
             SubManagerLoadingBar()
@@ -87,8 +90,9 @@ fun SubscriptionAddRoute(
 fun SubscriptionAddScreen(
     modifier: Modifier = Modifier,
     padding: PaddingValues,
+    quickStartInfo: SubscriptionQuickStartInfo? = null,
     onPopBackStack: () -> Unit,
-    onSaveClick: (SubscriptionAdd) -> Unit
+    onSaveClick: (SubscriptionAdd) -> Unit,
 ) {
     var name by remember { mutableStateOf("") }
     var price by remember { mutableStateOf("") }
@@ -101,6 +105,14 @@ fun SubscriptionAddScreen(
 
     val nameFocusRequester = remember { FocusRequester() }
     val priceFocusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(Unit) {
+        if (quickStartInfo != null) {
+            name = quickStartInfo.name
+            price = quickStartInfo.price.toString()
+            currentStep = InputStep.DATE
+        }
+    }
 
     LaunchedEffect(currentStep) {
         scrollState.animateScrollTo(scrollState.maxValue)
