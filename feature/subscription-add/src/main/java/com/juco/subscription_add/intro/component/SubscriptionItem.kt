@@ -14,13 +14,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.juco.common.model.SubscriptionQuickStartInfo
 import com.juco.designsystem.theme.SubManagerTheme
-import com.juco.local.model.Subscription
 import java.text.NumberFormat
 
 @Composable
 fun SubscriptionItem(
-    subscription: Subscription,
+    subscription: SubscriptionQuickStartInfo,
     onClick: () -> Unit
 ) {
     Row(
@@ -93,14 +93,11 @@ fun SubscriptionItem(
 private fun SubscriptionItemPreview() {
     SubManagerTheme {
         SubscriptionItem(
-            subscription = Subscription(
+            SubscriptionQuickStartInfo(
                 name = "Netflix",
                 thumbnail = "NETFLIX",
                 price = 17000,
-                description = "프리미엄",
-                paymentCycleType = "",
-                paymentCycleValue = 1,
-                paymentDay = 1
+                description = "프리미엄 4K"
             ),
             onClick = {}
         )
