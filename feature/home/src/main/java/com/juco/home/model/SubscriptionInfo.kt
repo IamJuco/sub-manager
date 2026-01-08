@@ -1,5 +1,7 @@
 package com.juco.home.model
 
+import java.time.LocalDate
+
 data class SubscriptionInfo(
     val subId: Long? = null,
     val name: String? = null,
@@ -8,5 +10,6 @@ data class SubscriptionInfo(
     val paymentDay: Long? = null,
     val nextPaymentDate: String? = null,
     val dDay: String? = null,
-    val description: String? = null
+    val description: String? = null,
+    val rawDate: LocalDate? = null
 )
