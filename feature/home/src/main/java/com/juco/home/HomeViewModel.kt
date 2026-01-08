@@ -2,7 +2,9 @@ package com.juco.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.juco.home.model.NextPaymentInfo
 import com.juco.home.model.SubscriptionInfo
+import com.juco.home.state.HomeUiState
 import com.juco.home.util.nextPaymentCalculator
 import com.juco.local.repository.LocalRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,37 +18,49 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     localRepository: LocalRepository
 ) : ViewModel() {
-
-    val subscriptionList: StateFlow<List<SubscriptionInfo>> = localRepository.getAllSubscriptions()
+    val uiState: StateFlow<HomeUiState> = localRepository.getAllSubscriptions()
         .map { list ->
-            list.map { subscription ->
-                val (formattedDate, dDay) = nextPaymentCalculator(
-                    startDateMillis = subscription.paymentDay,
-                    cycleType = subscription.paymentCycleType,
-                    cycleValue = subscription.paymentCycleValue
+            if (list.isEmpty()) {
+                HomeUiState.Empty
+            } else {
+                val processedList = list.map { subscription ->
+                    val result = nextPaymentCalculator(
+                        startDateMillis = subscription.paymentDay,
+                        cycleType = subscription.paymentCycleType,
+                        cycleValue = subscription.paymentCycleValue
+                    )
+                    SubscriptionInfo(
+                        subId = subscription.subId,
+                        name = subscription.name,
+                        thumbnail = subscription.thumbnail,
+                        price = subscription.price,
+                        description = subscription.description,
+                        nextPaymentDate = result.formattedDate,
+                        dDay = result.dDay,
+                        rawDate = result.rawDate
+                    )
+                }.sortedBy { it.rawDate }
+
+                val nearestItem = processedList.first()
+                val groupItems = processedList.filter { it.rawDate == nearestItem.rawDate }
+
+                val nextPaymentInfo = NextPaymentInfo(
+                    date = nearestItem.nextPaymentDate ?: "",
+                    dDay = nearestItem.dDay ?: "",
+                    totalAmount = groupItems.sumOf { it.price ?: 0L },
+                    items = groupItems
                 )
-                SubscriptionInfo(
-                    subId = subscription.subId,
-                    name = subscription.name,
-                    thumbnail = subscription.thumbnail,
-                    price = subscription.price,
-                    description = subscription.description,
-                    nextPaymentDate = formattedDate,
-                    dDay = dDay
+
+                HomeUiState.Success(
+                    subscriptionList = processedList,
+                    nextPaymentInfo = nextPaymentInfo
                 )
+
             }
         }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = emptyList()
-        )
-
-    val hasData: StateFlow<Boolean> = subscriptionList
-        .map { it.isNotEmpty() }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5000),
-            initialValue = false
+            initialValue = HomeUiState.Loading
         )
 }
