@@ -9,7 +9,10 @@ fun SubscriptionEntity.toDomain(): Subscription {
         name = name,
         thumbnail = thumbnail,
         price = price,
+        totalPrice = totalPrice,
         paymentDay = paymentDay,
+        paymentCycleType = paymentCycleType,
+        paymentCycleValue = paymentCycleValue,
         description = description
     )
 }
@@ -20,7 +23,10 @@ fun Subscription.toEntity(): SubscriptionEntity {
         name = name,
         thumbnail = thumbnail,
         price = price,
+        totalPrice = totalPrice,
         paymentDay = paymentDay,
+        paymentCycleType = paymentCycleType,
+        paymentCycleValue = paymentCycleValue,
         description = description
     )
 }

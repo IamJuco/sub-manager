@@ -5,6 +5,9 @@ data class Subscription(
     val name: String,
     val thumbnail: String,
     val price: Int,
+    val totalPrice: Int,
     val paymentDay: Int,
+    val paymentCycleType: String,
+    val paymentCycleValue: Int,
     val description: String? = null
 )
