@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.juco.common.model.SubscriptionQuickStartInfo
 import com.juco.common.navigation.RouteModel
 import com.juco.subscription_add.intro.SubscriptionAddIntroRoute
 
@@ -14,7 +15,7 @@ fun NavController.navigateToSubscriptionAddIntro(navOptions: NavOptions) {
 
 fun NavGraphBuilder.subscriptionAddIntroNavGraph(
     padding: PaddingValues,
-    navigateToSubscriptionAdd: () -> Unit,
+    navigateToSubscriptionAdd: (SubscriptionQuickStartInfo?) -> Unit,
     onPopBackStack: () -> Unit
 ) {
     composable<RouteModel.SubscriptionAddIntro> {

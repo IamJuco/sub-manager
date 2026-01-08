@@ -32,7 +32,8 @@ fun MainNavHost(
             padding = padding,
             navigateToHome = navigator::navigateToHome,
             onShowSnackBar = onShowSnackBar,
-            onPopBackStack = navigator::popBackStack
+            onPopBackStack = navigator::popBackStack,
+            navController = navigator.navController
         )
     }
 }

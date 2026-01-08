@@ -15,20 +15,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import com.juco.common.model.SubscriptionQuickStartInfo
 import com.juco.designsystem.component.SubManagerTopBar
 import com.juco.designsystem.theme.SubManagerTheme
 import com.juco.submanager.core.designsystem.R
 import com.juco.subscription_add.intro.component.SelfAddButton
 import com.juco.subscription_add.intro.component.SubscriptionItem
-import com.juco.subscription_add.intro.fake.dummyData
+import com.juco.subscription_add.intro.dataset.quickStartSubscriptionList
 
 @Composable
 fun SubscriptionAddIntroRoute(
     padding: PaddingValues,
-    navigateToSubscriptionAdd: () -> Unit,
+    navigateToSubscriptionAdd: (SubscriptionQuickStartInfo?) -> Unit,
     onPopBackStack: () -> Unit,
-    viewModel: SubscriptionAddIntroViewModel = hiltViewModel()
 ) {
     SubscriptionAddIntroScreen(
         padding = padding,
@@ -41,7 +40,7 @@ fun SubscriptionAddIntroRoute(
 fun SubscriptionAddIntroScreen(
     modifier: Modifier = Modifier,
     padding: PaddingValues,
-    navigateToSubscriptionAdd: () -> Unit,
+    navigateToSubscriptionAdd: (SubscriptionQuickStartInfo?) -> Unit,
     onPopBackStack: () -> Unit
 ) {
     Column(
@@ -61,7 +60,7 @@ fun SubscriptionAddIntroScreen(
         Spacer(Modifier.height(16.dp))
 
         SelfAddButton(
-            onClick = navigateToSubscriptionAdd
+            onClick = { navigateToSubscriptionAdd(null) }
         )
 
         Spacer(Modifier.height(16.dp))
@@ -80,10 +79,10 @@ fun SubscriptionAddIntroScreen(
             modifier = modifier.fillMaxSize(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(dummyData) { item ->
+            items(quickStartSubscriptionList) { item ->
                 SubscriptionItem(
                     subscription = item,
-                    onClick = { }
+                    onClick = { navigateToSubscriptionAdd(item) }
                 )
             }
         }

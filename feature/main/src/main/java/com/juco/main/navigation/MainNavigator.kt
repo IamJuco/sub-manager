@@ -9,6 +9,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.juco.common.constant.Constants
+import com.juco.common.model.SubscriptionQuickStartInfo
 import com.juco.common.navigation.MainRouteModel
 import com.juco.common.navigation.RouteModel
 import com.juco.home.navigation.navigateToHome
@@ -49,7 +51,14 @@ class MainNavigator(
 
     fun navigateToHome() = navController.navigateToHome(navOptions = singleTopOptions)
     fun navigateToSubscriptionAddIntro() = navController.navigateToSubscriptionAddIntro(navOptions = singleTopOptions)
-    fun navigateToSubscriptionAdd() = navController.navigateToSubscriptionAdd(navOptions = singleTopOptions)
+    fun navigateToSubscriptionAdd(info: SubscriptionQuickStartInfo? = null) {
+        if (info != null) {
+            navController.currentBackStackEntry
+                ?.savedStateHandle
+                ?.set(Constants.SUBSCRIPTION_QUICK_START, info)
+        }
+        navController.navigateToSubscriptionAdd(navOptions = singleTopOptions)
+    }
 
     fun popBackStack() = navController.popBackStack()
     fun popAllBackStack(destination: RouteModel) =
