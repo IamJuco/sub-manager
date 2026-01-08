@@ -34,6 +34,7 @@ import com.juco.designsystem.component.loading.SubManagerLoadingBar
 import com.juco.designsystem.theme.SubManagerTheme
 import com.juco.submanager.core.designsystem.R
 import com.juco.subscription_add.add.component.NameInputSection
+import com.juco.subscription_add.add.component.NotificationSection
 import com.juco.subscription_add.add.component.PaymentCycleSection
 import com.juco.subscription_add.add.component.PaymentDateSection
 import com.juco.subscription_add.add.component.PriceInputSection
@@ -106,6 +107,8 @@ fun SubscriptionAddScreen(
     val nameFocusRequester = remember { FocusRequester() }
     val priceFocusRequester = remember { FocusRequester() }
 
+    var isNotificationEnabled by remember { mutableStateOf(false) }
+
     LaunchedEffect(Unit) {
         if (quickStartInfo != null) {
             name = quickStartInfo.name
@@ -175,11 +178,21 @@ fun SubscriptionAddScreen(
             )
         }
 
+        if (currentStep.ordinal >= InputStep.ALARM.ordinal) {
+            Spacer(Modifier.height(32.dp))
+            NotificationSection(
+                isChecked = isNotificationEnabled,
+                onCheckedChange = { isEnabled ->
+                    isNotificationEnabled = isEnabled
+                }
+            )
+        }
+
         Spacer(Modifier.height(50.dp))
 
         SubManagerButton(
             modifier = Modifier.fillMaxWidth(),
-            text = if (currentStep == InputStep.CYCLE) "완료" else "다음",
+            text = if (currentStep == InputStep.ALARM) "완료" else "다음",
             enabled = when (currentStep) {
                 InputStep.NAME -> name.isNotEmpty()
                 InputStep.PRICE -> price.isNotEmpty()
@@ -190,14 +203,16 @@ fun SubscriptionAddScreen(
                     InputStep.NAME -> currentStep = InputStep.PRICE
                     InputStep.PRICE -> currentStep = InputStep.DATE
                     InputStep.DATE -> currentStep = InputStep.CYCLE
-                    InputStep.CYCLE -> {
+                    InputStep.CYCLE -> currentStep = InputStep.ALARM
+                    InputStep.ALARM -> {
                         onSaveClick(
                             SubscriptionAdd(
                                 name = name,
                                 price = price.toLongOrNull(),
                                 paymentDay = selectedDate,
                                 paymentCycleType = paymentCycle.type.name,
-                                paymentCycleValue = paymentCycle.value
+                                paymentCycleValue = paymentCycle.value,
+                                enableNotification = isNotificationEnabled
                             )
                         )
                     }
@@ -216,7 +231,7 @@ private fun SubscriptionAddScreenPreview() {
         SubscriptionAddScreen(
             padding = PaddingValues(),
             onPopBackStack = {},
-            onSaveClick = { SubscriptionAdd() }
+            onSaveClick = {}
         )
     }
 }
