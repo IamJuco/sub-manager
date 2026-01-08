@@ -13,11 +13,18 @@ fun NavController.navigateToSubscriptionAdd(navOptions: NavOptions) {
 }
 
 fun NavGraphBuilder.subscriptionAddNavGraph(
-    padding: PaddingValues
+    padding: PaddingValues,
+    navigateToHome: () -> Unit,
+    onShowSnackBar: (String) -> Unit,
+    onPopBackStack: () -> Unit
+
 ) {
     composable<RouteModel.SubscriptionAdd> {
         SubscriptionAddRoute(
-            padding = padding
+            padding = padding,
+            navigateToHome = navigateToHome,
+            onShowSnackBar = onShowSnackBar,
+            onPopBackStack = onPopBackStack
         )
     }
 }
