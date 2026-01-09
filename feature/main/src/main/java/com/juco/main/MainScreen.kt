@@ -42,8 +42,10 @@ fun MainScreen(
         bottomBar = {
             BottomNavigationBar(
                 currentMenu = navigator.currentMenu,
-                onMenuSelected = { navigator.navigate(it) }
+                onMenuSelected = { navigator.navigate(it) },
+                isVisible = navigator.showBottomBar()
             )
         }
+
     )
 }

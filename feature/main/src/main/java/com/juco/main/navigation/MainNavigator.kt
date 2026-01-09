@@ -38,6 +38,7 @@ class MainNavigator(
         val navOptions = navOptions {
             popUpTo(navController.graph.findStartDestination().id) {
                 inclusive = menu == MainMenu.HOME
+                saveState = true
             }
             launchSingleTop = true
             restoreState = true
@@ -52,11 +53,14 @@ class MainNavigator(
     fun navigateToHome() = navController.navigateToHome(navOptions = singleTopOptions)
     fun navigateToSubscriptionAddIntro() = navController.navigateToSubscriptionAddIntro(navOptions = singleTopOptions)
     fun navigateToSubscriptionAdd(info: SubscriptionQuickStartInfo? = null) {
+        val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
+
         if (info != null) {
-            navController.currentBackStackEntry
-                ?.savedStateHandle
-                ?.set(Constants.SUBSCRIPTION_QUICK_START, info)
+            savedStateHandle?.set(Constants.SUBSCRIPTION_QUICK_START, info)
+        } else {
+            savedStateHandle?.remove<SubscriptionQuickStartInfo>(Constants.SUBSCRIPTION_QUICK_START)
         }
+
         navController.navigateToSubscriptionAdd(navOptions = singleTopOptions)
     }
 
@@ -64,6 +68,13 @@ class MainNavigator(
     fun popAllBackStack(destination: RouteModel) =
         navController.popBackStack(destination, false)
 
+    @Composable
+    fun showBottomBar(): Boolean {
+        val isCurrentMenu = MainMenu.contains {
+            currentDestination?.hasRoute(it::class) == true
+        }
+        return isCurrentMenu
+    }
 }
 
 @Composable

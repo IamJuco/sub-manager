@@ -26,39 +26,42 @@ fun BottomNavigationBar(
     modifier: Modifier = Modifier,
     currentMenu: MainMenu?,
     onMenuSelected: (MainMenu) -> Unit,
+    isVisible: Boolean
 ) {
-    Column(
-        modifier = modifier
-    ) {
-        Box(
-            modifier = Modifier.fillMaxWidth().background(SubManagerTheme.colors.primaryBackground)
+    if (isVisible) {
+        Column(
+            modifier = modifier
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth().navigationBarsPadding().height(48.dp)
+            Box(
+                modifier = Modifier.fillMaxWidth().background(SubManagerTheme.colors.primaryBackground)
             ) {
-                MainMenu.entries.forEach { menu ->
-                    val selected = menu == currentMenu
-                    Box(
-                        modifier = Modifier
-                            .weight(1f)
-                            .fillMaxHeight()
-                            .clickable(
-                                interactionSource = remember { MutableInteractionSource() },
-                                indication = null,
-                            ) {
-                                onMenuSelected(menu)
-                            },
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            painter = painterResource(
-                                if (selected) menu.iconResIdTrue
-                                else menu.iconResIdFalse
-                            ),
-                            contentDescription = menu.contentDescription,
-                            modifier = Modifier.size(32.dp),
-                            tint = SubManagerTheme.colors.primaryText
-                        )
+                Row(
+                    modifier = Modifier.fillMaxWidth().navigationBarsPadding().height(48.dp)
+                ) {
+                    MainMenu.entries.forEach { menu ->
+                        val selected = menu == currentMenu
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .fillMaxHeight()
+                                .clickable(
+                                    interactionSource = remember { MutableInteractionSource() },
+                                    indication = null,
+                                ) {
+                                    onMenuSelected(menu)
+                                },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                painter = painterResource(
+                                    if (selected) menu.iconResIdTrue
+                                    else menu.iconResIdFalse
+                                ),
+                                contentDescription = menu.contentDescription,
+                                modifier = Modifier.size(32.dp),
+                                tint = SubManagerTheme.colors.primaryText
+                            )
+                        }
                     }
                 }
             }
@@ -72,7 +75,8 @@ private fun BottomNavigationBarHomePreview() {
     SubManagerTheme {
         BottomNavigationBar(
             currentMenu = MainMenu.HOME,
-            onMenuSelected = {}
+            onMenuSelected = {},
+            isVisible = true
         )
     }
 }
@@ -83,7 +87,8 @@ private fun BottomNavigationBarSettingPreview() {
     SubManagerTheme {
         BottomNavigationBar(
             currentMenu = MainMenu.SETTING,
-            onMenuSelected = {}
+            onMenuSelected = {},
+            isVisible = true
         )
     }
 }

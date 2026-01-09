@@ -30,5 +30,10 @@ enum class MainMenu (
         fun find(predicate: @Composable (RouteModel) -> Boolean): MainMenu? {
             return MainMenu.entries.find { predicate(it.route) }
         }
+
+        @Composable
+        fun contains(predicate: @Composable (RouteModel) -> Boolean): Boolean {
+            return entries.map { it.route }.any { predicate(it) }
+        }
     }
 }
