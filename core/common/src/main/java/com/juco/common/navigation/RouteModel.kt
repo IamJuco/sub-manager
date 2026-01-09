@@ -9,6 +9,9 @@ sealed interface RouteModel {
     @Serializable
     data object SubscriptionAdd : RouteModel
 
+    @Serializable
+    data object SubscriptionDetail : RouteModel
+
 }
 
 sealed interface MainRouteModel : RouteModel {

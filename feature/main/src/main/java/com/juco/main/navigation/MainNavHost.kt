@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import com.juco.home.navigation.homeNavGraph
 import com.juco.subscription_add.add.navigation.subscriptionAddNavGraph
 import com.juco.subscription_add.intro.navigation.subscriptionAddIntroNavGraph
+import com.juco.subscription_detail.navigation.subscriptionDetailNavGraph
 
 @Composable
 fun MainNavHost(
@@ -40,6 +41,10 @@ fun MainNavHost(
             onShowSnackBar = onShowSnackBar,
             onPopBackStack = navigator::popBackStack,
             navController = navigator.navController
+        )
+        subscriptionDetailNavGraph(
+            padding = padding,
+            onPopBackStack = navigator::popBackStack
         )
     }
 }
