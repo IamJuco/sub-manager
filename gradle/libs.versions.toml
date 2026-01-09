@@ -42,6 +42,7 @@ browser = "1.8.0"
 semver = "2.0.0"
 
 room = "2.8.4"
+material = "1.13.0"
 
 [libraries]
 ## androidx
@@ -116,6 +117,7 @@ semver = { group = "net.swiftzer.semver", name = "semver", version.ref = "semver
 room = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [bundles]
 coroutine = [
