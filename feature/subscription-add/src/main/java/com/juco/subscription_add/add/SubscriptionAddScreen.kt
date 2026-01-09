@@ -137,6 +137,7 @@ fun SubscriptionAddScreen(
             .fillMaxSize()
             .background(SubManagerTheme.colors.primaryBackground)
             .padding(padding)
+            .padding(horizontal = 16.dp)
             .imePadding()
     ) {
         SubManagerTopBar(
@@ -151,7 +152,7 @@ fun SubscriptionAddScreen(
                 .weight(1f)
                 .fillMaxWidth()
                 .verticalScroll(scrollState)
-                .padding(horizontal = 16.dp)
+
         ) {
             Spacer(Modifier.height(32.dp))
 
