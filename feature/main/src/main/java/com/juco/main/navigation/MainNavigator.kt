@@ -52,7 +52,9 @@ class MainNavigator(
     }
 
     fun navigateToHome() = navController.navigateToHome(navOptions = singleTopOptions)
-    fun navigateToSubscriptionAddIntro() = navController.navigateToSubscriptionAddIntro(navOptions = singleTopOptions)
+    fun navigateToSubscriptionAddIntro() =
+        navController.navigateToSubscriptionAddIntro(navOptions = singleTopOptions)
+
     fun navigateToSubscriptionAdd(info: SubscriptionQuickStartInfo? = null) {
         val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
 
@@ -64,7 +66,9 @@ class MainNavigator(
 
         navController.navigateToSubscriptionAdd(navOptions = singleTopOptions)
     }
-    fun navigateToSubscriptionDetail() = navController.navigateToSubscriptionDetail(navOptions = singleTopOptions)
+
+    fun navigateToSubscriptionDetail(subId: Long) =
+        navController.navigateToSubscriptionDetail(subId = subId, navOptions = singleTopOptions)
 
     fun popBackStack() = navController.popBackStack()
     fun popAllBackStack(destination: RouteModel) =

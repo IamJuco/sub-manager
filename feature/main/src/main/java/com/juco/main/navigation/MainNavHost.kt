@@ -28,7 +28,8 @@ fun MainNavHost(
     ) {
         homeNavGraph(
             padding = padding,
-            navigateToSubscriptionAddIntro = navigator::navigateToSubscriptionAddIntro
+            navigateToSubscriptionAddIntro = navigator::navigateToSubscriptionAddIntro,
+            navigateToSubscriptionDetail = navigator::navigateToSubscriptionDetail
         )
         subscriptionAddIntroNavGraph(
             padding = padding,

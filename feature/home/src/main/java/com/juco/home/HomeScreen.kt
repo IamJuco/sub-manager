@@ -32,7 +32,8 @@ import com.juco.home.state.HomeUiState
 fun HomeRoute(
     padding: PaddingValues,
     viewModel: HomeViewModel = hiltViewModel(),
-    navigateToSubscriptionAddIntro: () -> Unit
+    navigateToSubscriptionAddIntro: () -> Unit,
+    navigateToSubscriptionDetail: (Long) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -53,7 +54,8 @@ fun HomeRoute(
                 padding = padding,
                 subscriptionList = state.subscriptionList,
                 nextPaymentInfo = state.nextPaymentInfo,
-                navigateToSubscriptionAddIntro = navigateToSubscriptionAddIntro
+                navigateToSubscriptionAddIntro = navigateToSubscriptionAddIntro,
+                navigateToSubscriptionDetail = navigateToSubscriptionDetail
             )
         }
     }
@@ -64,6 +66,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     padding: PaddingValues,
     navigateToSubscriptionAddIntro: () -> Unit,
+    navigateToSubscriptionDetail: (Long) -> Unit,
     subscriptionList: List<SubscriptionInfo> = emptyList(),
     nextPaymentInfo: NextPaymentInfo? = null
 ) {
@@ -112,7 +115,9 @@ fun HomeScreen(
                     SubscriptionItem(
                         subscription = item,
                         onClick = {
-                            // TODO: 상세 화면 이동
+                            navigateToSubscriptionDetail(
+                                item.subId ?: 0
+                            )
                         }
                     )
 
@@ -177,7 +182,8 @@ private fun HomeScreenPreview() {
             padding = PaddingValues(),
             subscriptionList = dummyList,
             nextPaymentInfo = dummyNextPayment,
-            navigateToSubscriptionAddIntro = {}
+            navigateToSubscriptionAddIntro = {},
+            navigateToSubscriptionDetail = {}
         )
     }
 }
