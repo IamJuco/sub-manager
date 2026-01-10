@@ -19,14 +19,13 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.juco.designsystem.theme.SubManagerTheme
+import com.juco.subscription_detail.model.SubscriptionDetailInfo
+import java.text.NumberFormat
 
 @Composable
 fun HeaderSection(
     modifier: Modifier = Modifier,
-    thumbnail: String,
-    name: String,
-    price: Long,
-    description: String
+    subscription: SubscriptionDetailInfo
 ) {
     Column(
         modifier = modifier
@@ -44,7 +43,7 @@ fun HeaderSection(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = name.take(1),
+                    text = subscription.name?.take(1) ?: "",
                     style = SubManagerTheme.typography.h3SemiBold,
                     color = SubManagerTheme.colors.primaryText,
                     maxLines = 1,
@@ -58,7 +57,7 @@ fun HeaderSection(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(
-                    text = name,
+                    text = subscription.name ?: "",
                     style = SubManagerTheme.typography.h3SemiBold,
                     color = SubManagerTheme.colors.primaryText,
                     maxLines = 1,
@@ -68,7 +67,7 @@ fun HeaderSection(
                 Spacer(modifier = Modifier.height(2.dp))
 
                 Text(
-                    text = "${java.text.NumberFormat.getIntegerInstance().format(price)}원",
+                    text = "${NumberFormat.getIntegerInstance().format(subscription.price)}원",
                     style = SubManagerTheme.typography.h3SemiBold,
                     color = SubManagerTheme.colors.secondaryText,
                     maxLines = 1,
@@ -88,7 +87,7 @@ fun HeaderSection(
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = description,
+            text = subscription.description ?: "",
             style = SubManagerTheme.typography.b2Regular,
             color = SubManagerTheme.colors.primaryText,
         )
@@ -100,10 +99,17 @@ fun HeaderSection(
 private fun HeaderSectionPreview() {
     SubManagerTheme {
         HeaderSection(
-            thumbnail = "",
-            name = "Netflix",
-            price = 13500L,
-            description = "메모"
+            subscription = SubscriptionDetailInfo(
+                subId = 1L,
+                name = "Netflix",
+                thumbnail = "",
+                price = 13500L,
+                paymentDay = "2026. 01. 10",
+                nextPaymentDate = "26년 1월 10일",
+                dDay = "D-2",
+                description = "프리미엄 멤버십",
+                enableNotification = true
+            )
         )
     }
 }
