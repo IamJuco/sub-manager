@@ -9,5 +9,6 @@ data class Subscription(
     val paymentCycleType: String,
     val paymentCycleValue: Int,
     val description: String? = null,
-    val enableNotification: Boolean
+    val enableNotification: Boolean,
+    val isPaused: Boolean
 )

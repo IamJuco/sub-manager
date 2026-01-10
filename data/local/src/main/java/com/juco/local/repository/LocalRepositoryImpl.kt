@@ -43,4 +43,8 @@ class LocalRepositoryImpl @Inject constructor(
     override suspend fun updateNotification(subId: Long, isEnabled: Boolean) {
         subscriptionDao.updateNotification(subId, isEnabled)
     }
+
+    override suspend fun updatePause(subId: Long, isPaused: Boolean) {
+        subscriptionDao.updatePause(subId, isPaused)
+    }
 }

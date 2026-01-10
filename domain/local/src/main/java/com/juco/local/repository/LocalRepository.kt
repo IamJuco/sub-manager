@@ -11,4 +11,5 @@ interface LocalRepository {
     suspend fun getSubscriptionById(subId: Long): Subscription
     suspend fun hasSubscriptions(): Boolean
     suspend fun updateNotification(subId: Long, isEnabled: Boolean)
+    suspend fun updatePause(subId: Long, isPaused: Boolean)
 }

@@ -31,4 +31,7 @@ interface SubscriptionDao {
 
     @Query("UPDATE subscriptions SET enableNotification = :isEnabled WHERE subId = :subId")
     suspend fun updateNotification(subId: Long, isEnabled: Boolean)
+
+    @Query("UPDATE subscriptions SET isPaused = :isPaused WHERE subId = :subId")
+    suspend fun updatePause(subId: Long, isPaused: Boolean)
 }
