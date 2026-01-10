@@ -24,10 +24,10 @@ fun SubManagerButton(
     enabled: Boolean = true,
     text: String,
     textStyle: TextStyle = SubManagerTheme.typography.c1SemiBold,
-    enabledTextColor: Color = SubManagerTheme.colors.button,
-    disabledTextColor: Color = SubManagerTheme.colors.button,
-    enabledBackgroundColor: Color = SubManagerTheme.colors.secondaryBackground,
-    disabledBackgroundColor: Color = SubManagerTheme.colors.secondaryBackground
+    enabledTextColor: Color = SubManagerTheme.colors.primaryBackground,
+    disabledTextColor: Color = SubManagerTheme.colors.primaryText,
+    enabledBackgroundColor: Color = SubManagerTheme.colors.primaryText,
+    disabledBackgroundColor: Color = SubManagerTheme.colors.primaryText
 
 ) {
     val backgroundColor = if (enabled) enabledBackgroundColor else disabledBackgroundColor
