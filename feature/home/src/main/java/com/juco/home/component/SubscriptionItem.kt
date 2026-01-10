@@ -115,14 +115,15 @@ fun SubscriptionItem(
 
                 Spacer(modifier = Modifier.height(2.dp))
 
-
-                Text(
-                    text = subscription.description ?: "메모",
-                    style = SubManagerTheme.typography.c1Regular,
-                    color = SubManagerTheme.colors.secondaryText,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
+                if (!subscription.description.isNullOrEmpty()) {
+                    Text(
+                        text = subscription.description,
+                        style = SubManagerTheme.typography.c1Regular,
+                        color = SubManagerTheme.colors.secondaryText,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
 
                 Spacer(modifier = Modifier.height(8.dp))
 
