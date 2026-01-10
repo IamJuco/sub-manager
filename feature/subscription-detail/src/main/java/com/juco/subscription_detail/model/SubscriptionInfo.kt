@@ -11,5 +11,6 @@ data class SubscriptionDetailInfo(
     val dDay: String? = null,
     val paymentCycle: String? = null,
     val description: String? = null,
-    val enableNotification: Boolean
+    val enableNotification: Boolean,
+    val isPaused: Boolean
 )

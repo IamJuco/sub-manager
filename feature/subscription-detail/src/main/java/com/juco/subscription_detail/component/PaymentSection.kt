@@ -121,7 +121,8 @@ private fun PaymentSectionPreview() {
                 nextPaymentDate = "26년 1월 10일",
                 dDay = "D-2",
                 description = "프리미엄 멤버십",
-                enableNotification = true
+                enableNotification = true,
+                isPaused = false
             )
         )
     }
