@@ -45,6 +45,12 @@ fun NotificationSection(
         }
     )
 
+    if (showPermissionDialog) {
+        NotificationDialog(
+            onDismissRequest = { showPermissionDialog = false }
+        )
+    }
+
     Column(
         modifier = modifier
     ) {
