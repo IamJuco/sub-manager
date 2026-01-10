@@ -22,7 +22,8 @@ class SubscriptionDetailViewModel @Inject constructor(
     private val localRepository: LocalRepository
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<SubscriptionDetailUiState>(SubscriptionDetailUiState.Loading)
+    private val _uiState =
+        MutableStateFlow<SubscriptionDetailUiState>(SubscriptionDetailUiState.Loading)
     val uiState = _uiState.asStateFlow()
 
     fun loadSubscription(subId: Long) {
@@ -32,8 +33,9 @@ class SubscriptionDetailViewModel @Inject constructor(
                 localRepository.getSubscriptionById(subId)
 
             }.onSuccess { subscription ->
-                val cycleType = PaymentCycleType.entries.find { it.name == subscription.paymentCycleType }
-                    ?: PaymentCycleType.NONE
+                val cycleType =
+                    PaymentCycleType.entries.find { it.name == subscription.paymentCycleType }
+                        ?: PaymentCycleType.NONE
                 val paymentCycle = PaymentCycle(
                     type = cycleType,
                     value = subscription.paymentCycleValue
@@ -61,13 +63,14 @@ class SubscriptionDetailViewModel @Inject constructor(
                     nextPaymentDate = nextPaymentResult.formattedDate,
                     dDay = nextPaymentResult.dDay,
                     description = subscription.description,
-                    enableNotification = subscription.enableNotification
+                    enableNotification = subscription.enableNotification,
+                    isPaused = subscription.isPaused
                 )
 
                 _uiState.update {
                     SubscriptionDetailUiState.Success(detailInfo)
                 }
-                
+
             }.onFailure { e ->
                 _uiState.update {
                     SubscriptionDetailUiState.Error
@@ -92,7 +95,41 @@ class SubscriptionDetailViewModel @Inject constructor(
             runCatching {
                 localRepository.updateNotification(subId, enableNotification)
             }.onFailure { e ->
-                _uiState.update { SubscriptionDetailUiState.Success(currentInfo.copy(enableNotification = !enableNotification)) }
+                _uiState.update {
+                    SubscriptionDetailUiState.Success(
+                        currentInfo.copy(
+                            enableNotification = !enableNotification
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    fun updatePause(isPaused: Boolean) {
+        val currentState = _uiState.value
+        if (currentState !is SubscriptionDetailUiState.Success) return
+        val currentInfo = currentState.subscription
+        val subId = currentInfo.subId ?: return
+
+        val notificationState = if (isPaused) false else currentInfo.enableNotification
+
+        viewModelScope.launch {
+            _uiState.update {
+                SubscriptionDetailUiState.Success(
+                    currentInfo.copy(isPaused = isPaused, enableNotification = notificationState)
+                )
+            }
+
+            runCatching {
+                localRepository.updatePause(subId, isPaused)
+                if (isPaused) {
+                    localRepository.updateNotification(subId, false)
+                }
+            }.onFailure {
+                _uiState.update {
+                    SubscriptionDetailUiState.Success(currentInfo)
+                }
             }
         }
     }

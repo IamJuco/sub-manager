@@ -34,6 +34,7 @@ import com.juco.subscription_detail.state.SubscriptionDetailUiState
 fun SubscriptionDetailRoute(
     padding: PaddingValues,
     onPopBackStack: () -> Unit,
+    onShowSnackBar: (String) -> Unit,
     subId: Long,
     viewModel: SubscriptionDetailViewModel = hiltViewModel()
 ) {
@@ -53,7 +54,9 @@ fun SubscriptionDetailRoute(
                 padding = padding,
                 onPopBackStack = onPopBackStack,
                 subscription = state.subscription,
-                onNotificationToggle = viewModel::updateNotification
+                onNotificationToggle = viewModel::updateNotification,
+                onPauseToggle = viewModel::updatePause,
+                onShowSnackBar = onShowSnackBar
             )
         }
 
@@ -70,8 +73,10 @@ fun SubscriptionDetailScreen(
     modifier: Modifier = Modifier,
     padding: PaddingValues,
     onPopBackStack: () -> Unit,
+    onShowSnackBar: (String) -> Unit,
     subscription: SubscriptionDetailInfo,
-    onNotificationToggle: (Boolean) -> Unit
+    onNotificationToggle: (Boolean) -> Unit,
+    onPauseToggle: (Boolean) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -119,7 +124,11 @@ fun SubscriptionDetailScreen(
         NotificationSection(
             isChecked = subscription.enableNotification,
             onCheckedChange = { isEnabled ->
-                onNotificationToggle(isEnabled)
+                if (isEnabled && subscription.isPaused) {
+                    onShowSnackBar("일시정지 중에는 알람을 켤 수 없습니다.")
+                } else {
+                    onNotificationToggle(isEnabled)
+                }
             }
         )
 
@@ -133,8 +142,13 @@ fun SubscriptionDetailScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         PauseSection(
-            isChecked = false,
-            onCheckedChange = {}
+            isChecked = subscription.isPaused,
+            onCheckedChange = { isPaused ->
+                if (isPaused && subscription.enableNotification) {
+                    onShowSnackBar("일시정지되어 알림 설정이 해제되었습니다.")
+                }
+                onPauseToggle(isPaused)
+            }
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -168,9 +182,12 @@ private fun SubscriptionDetailScreenPreview() {
                 nextPaymentDate = "26년 1월 10일",
                 dDay = "D-2",
                 description = "프리미엄 멤버십",
-                enableNotification = true
+                enableNotification = true,
+                isPaused = false
             ),
-            onNotificationToggle = {}
+            onNotificationToggle = {},
+            onPauseToggle = {},
+            onShowSnackBar = {}
         )
     }
 }
