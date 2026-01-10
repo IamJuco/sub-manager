@@ -15,7 +15,6 @@ class LocalRepositoryImpl @Inject constructor(
 ) : LocalRepository {
 
     override suspend fun insertSubscription(subscription: Subscription) {
-        // Domain Model을 Entity로 변환해서 저장
         subscriptionDao.insert(subscription.toEntity())
     }
 
@@ -39,5 +38,9 @@ class LocalRepositoryImpl @Inject constructor(
 
     override suspend fun hasSubscriptions(): Boolean {
         return subscriptionDao.hasSubscriptions()
+    }
+
+    override suspend fun updateNotification(subId: Long, isEnabled: Boolean) {
+        subscriptionDao.updateNotification(subId, isEnabled)
     }
 }

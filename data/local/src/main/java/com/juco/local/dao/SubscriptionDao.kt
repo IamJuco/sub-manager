@@ -28,4 +28,7 @@ interface SubscriptionDao {
 
     @Query("SELECT EXISTS(SELECT * FROM subscriptions LIMIT 1)")
     suspend fun hasSubscriptions(): Boolean
+
+    @Query("UPDATE subscriptions SET enableNotification = :isEnabled WHERE subId = :subId")
+    suspend fun updateNotification(subId: Long, isEnabled: Boolean)
 }

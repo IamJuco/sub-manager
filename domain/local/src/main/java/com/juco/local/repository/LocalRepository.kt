@@ -10,4 +10,5 @@ interface LocalRepository {
     fun getAllSubscriptions(): Flow<List<Subscription>>
     suspend fun getSubscriptionById(subId: Long): Subscription
     suspend fun hasSubscriptions(): Boolean
+    suspend fun updateNotification(subId: Long, isEnabled: Boolean)
 }
