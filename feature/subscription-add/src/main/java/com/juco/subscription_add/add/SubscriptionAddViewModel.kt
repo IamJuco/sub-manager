@@ -42,7 +42,8 @@ class SubscriptionAddViewModel @Inject constructor(
                     paymentCycleType = subscriptionAdd.paymentCycleType ?: "",
                     paymentCycleValue = subscriptionAdd.paymentCycleValue ?: 0,
                     description = null,
-                    enableNotification = subscriptionAdd.enableNotification
+                    enableNotification = subscriptionAdd.enableNotification,
+                    isPaused = false
                 )
                 localRepository.insertSubscription(subscription)
 
