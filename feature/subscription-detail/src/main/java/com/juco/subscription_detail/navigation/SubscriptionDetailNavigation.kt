@@ -15,13 +15,15 @@ fun NavController.navigateToSubscriptionDetail(subId: Long, navOptions: NavOptio
 
 fun NavGraphBuilder.subscriptionDetailNavGraph(
     padding: PaddingValues,
-    onPopBackStack: () -> Unit
+    onPopBackStack: () -> Unit,
+    onShowSnackBar: (String) -> Unit,
 ) {
     composable<RouteModel.SubscriptionDetail> { backStackEntry ->
         val subId = backStackEntry.toRoute<RouteModel.SubscriptionDetail>().subId
         SubscriptionDetailRoute(
             padding = padding,
             onPopBackStack = onPopBackStack,
+            onShowSnackBar = onShowSnackBar,
             subId = subId
         )
     }

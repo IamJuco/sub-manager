@@ -45,7 +45,8 @@ fun MainNavHost(
         )
         subscriptionDetailNavGraph(
             padding = padding,
-            onPopBackStack = navigator::popBackStack
+            onPopBackStack = navigator::popBackStack,
+            onShowSnackBar = onShowSnackBar
         )
     }
 }
