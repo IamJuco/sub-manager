@@ -21,13 +21,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.juco.designsystem.component.SubManagerTopBar
 import com.juco.designsystem.component.loading.SubManagerLoadingBar
 import com.juco.designsystem.theme.SubManagerTheme
-import com.juco.local.model.Subscription
 import com.juco.submanager.core.designsystem.R
 import com.juco.subscription_detail.component.HeaderSection
 import com.juco.subscription_detail.component.NotificationSection
 import com.juco.subscription_detail.component.PaymentSection
 import com.juco.subscription_detail.component.PauseSection
 import com.juco.subscription_detail.component.SettingSection
+import com.juco.subscription_detail.model.SubscriptionDetailInfo
 import com.juco.subscription_detail.state.SubscriptionDetailUiState
 
 @Composable
@@ -52,7 +52,8 @@ fun SubscriptionDetailRoute(
             SubscriptionDetailScreen(
                 padding = padding,
                 onPopBackStack = onPopBackStack,
-                subscription = state.subscription
+                subscription = state.subscription,
+                onNotificationToggle = viewModel::updateNotification
             )
         }
 
@@ -69,7 +70,8 @@ fun SubscriptionDetailScreen(
     modifier: Modifier = Modifier,
     padding: PaddingValues,
     onPopBackStack: () -> Unit,
-    subscription: Subscription
+    subscription: SubscriptionDetailInfo,
+    onNotificationToggle: (Boolean) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -89,10 +91,7 @@ fun SubscriptionDetailScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         HeaderSection(
-            thumbnail = subscription.thumbnail,
-            name = subscription.name,
-            price = subscription.price,
-            description = subscription.description ?: ""
+            subscription = subscription
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -104,7 +103,9 @@ fun SubscriptionDetailScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        PaymentSection()
+        PaymentSection(
+            subscription = subscription
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -116,8 +117,10 @@ fun SubscriptionDetailScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         NotificationSection(
-            isChecked = false,
-            onCheckedChange = {}
+            isChecked = subscription.enableNotification,
+            onCheckedChange = { isEnabled ->
+                onNotificationToggle(isEnabled)
+            }
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -144,6 +147,8 @@ fun SubscriptionDetailScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         SettingSection()
+
+        Spacer(modifier = Modifier.height(50.dp))
     }
 }
 
@@ -154,17 +159,18 @@ private fun SubscriptionDetailScreenPreview() {
         SubscriptionDetailScreen(
             padding = PaddingValues(),
             onPopBackStack = {},
-            subscription = Subscription(
+            subscription = SubscriptionDetailInfo(
                 subId = 1L,
                 name = "Netflix",
                 thumbnail = "",
                 price = 13500L,
-                paymentDay = System.currentTimeMillis(),
-                paymentCycleType = "MONTH",
-                paymentCycleValue = 1,
+                paymentDay = "2026. 01. 10",
+                nextPaymentDate = "26년 1월 10일",
+                dDay = "D-2",
                 description = "프리미엄 멤버십",
                 enableNotification = true
-            )
+            ),
+            onNotificationToggle = {}
         )
     }
 }
