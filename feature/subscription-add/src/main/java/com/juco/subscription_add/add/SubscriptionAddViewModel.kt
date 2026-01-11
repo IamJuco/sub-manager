@@ -41,7 +41,7 @@ class SubscriptionAddViewModel @Inject constructor(
                     paymentDay = subscriptionAdd.paymentDay ?: 0,
                     paymentCycleType = subscriptionAdd.paymentCycleType ?: "",
                     paymentCycleValue = subscriptionAdd.paymentCycleValue ?: 0,
-                    description = null,
+                    description = subscriptionAdd.description,
                     enableNotification = subscriptionAdd.enableNotification,
                     isPaused = false
                 )

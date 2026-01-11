@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.juco.common.model.SubscriptionQuickStartInfo
+import com.juco.common.util.Logger
 import com.juco.common.util.PaymentCycle
 import com.juco.designsystem.component.SubManagerTopBar
 import com.juco.designsystem.component.button.SubManagerButton
@@ -230,7 +231,8 @@ fun SubscriptionAddScreen(
                                     paymentDay = selectedDate,
                                     paymentCycleType = paymentCycle.type.name,
                                     paymentCycleValue = paymentCycle.value,
-                                    enableNotification = isNotificationEnabled
+                                    enableNotification = isNotificationEnabled,
+                                    description = quickStartInfo?.description
                                 )
                             )
                         }
