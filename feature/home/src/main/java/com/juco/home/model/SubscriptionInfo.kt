@@ -11,5 +11,6 @@ data class SubscriptionInfo(
     val nextPaymentDate: String? = null,
     val dDay: String? = null,
     val description: String? = null,
-    val rawDate: LocalDate? = null
+    val rawDate: LocalDate? = null,
+    val isPaused: Boolean = false
 )
