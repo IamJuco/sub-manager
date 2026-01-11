@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,6 +34,14 @@ fun SubscriptionItem(
     subscription: SubscriptionInfo,
     onClick: () -> Unit
 ) {
+    val borderColor = if (subscription.isPaused) {
+        SubManagerTheme.colors.disabledText
+    } else {
+        SubManagerTheme.colors.primaryText
+    }
+
+    val contentAlpha = if (subscription.isPaused) 0.5f else 1f
+
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -42,38 +51,62 @@ fun SubscriptionItem(
             .clickable(onClick = onClick)
             .border(
                 width = 1.dp,
-                color = SubManagerTheme.colors.primaryText,
+                color = borderColor,
                 shape = RoundedCornerShape(8.dp)
             )
             .padding(16.dp),
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            Text(
-                text = subscription.nextPaymentDate ?: "",
-                style = SubManagerTheme.typography.b1SemiBold,
-                color = SubManagerTheme.colors.primaryText,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = SubManagerTheme.colors.primaryText,
-                        shape = RoundedCornerShape(100.dp)
-                    )
-                    .padding(horizontal = 10.dp, vertical = 4.dp)
-            ) {
+            if (subscription.isPaused) {
                 Text(
-                    text = subscription.dDay ?: "",
-                    style = SubManagerTheme.typography.c1SemiBold,
-                    color = SubManagerTheme.colors.primaryBackground
+                    text = "일시정지 상태입니다.",
+                    style = SubManagerTheme.typography.b1SemiBold,
+                    color = SubManagerTheme.colors.secondaryText,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
                 )
+
+                Box(
+                    modifier = Modifier
+                        .background(
+                            color = SubManagerTheme.colors.disabledText,
+                            shape = RoundedCornerShape(100.dp)
+                        )
+                        .padding(horizontal = 10.dp, vertical = 4.dp)
+                ) {
+                    Text(
+                        text = "PAUSE",
+                        style = SubManagerTheme.typography.c1SemiBold,
+                        color = SubManagerTheme.colors.primaryBackground
+                    )
+                }
+            } else {
+                Text(
+                    text = subscription.nextPaymentDate ?: "",
+                    style = SubManagerTheme.typography.b1SemiBold,
+                    color = SubManagerTheme.colors.primaryText,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+
+                Box(
+                    modifier = Modifier
+                        .background(
+                            color = SubManagerTheme.colors.primaryText,
+                            shape = RoundedCornerShape(100.dp)
+                        )
+                        .padding(horizontal = 10.dp, vertical = 4.dp)
+                ) {
+                    Text(
+                        text = subscription.dDay ?: "",
+                        style = SubManagerTheme.typography.c1SemiBold,
+                        color = SubManagerTheme.colors.primaryBackground
+                    )
+                }
             }
         }
 
@@ -81,7 +114,8 @@ fun SubscriptionItem(
 
         Row(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .alpha(contentAlpha),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(

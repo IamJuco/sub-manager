@@ -37,25 +37,31 @@ class HomeViewModel @Inject constructor(
                         description = subscription.description,
                         nextPaymentDate = result.formattedDate,
                         dDay = result.dDay,
-                        rawDate = result.rawDate
+                        rawDate = result.rawDate,
+                        isPaused = subscription.isPaused
                     )
-                }.sortedBy { it.rawDate }
+                }
 
-                val nearestItem = processedList.first()
-                val groupItems = processedList.filter { it.rawDate == nearestItem.rawDate }
+                val (activeList, pausedList) = processedList.partition { !it.isPaused }
+                val sortedActiveList = activeList.sortedBy { it.rawDate }
+                val nextPaymentInfo = if (sortedActiveList.isNotEmpty()) {
+                    val nearestItem = sortedActiveList.first()
+                    val groupItems = sortedActiveList.filter { it.rawDate == nearestItem.rawDate }
 
-                val nextPaymentInfo = NextPaymentInfo(
-                    date = nearestItem.nextPaymentDate ?: "",
-                    dDay = nearestItem.dDay ?: "",
-                    totalAmount = groupItems.sumOf { it.price ?: 0L },
-                    items = groupItems
-                )
-
+                    NextPaymentInfo(
+                        date = nearestItem.nextPaymentDate ?: "",
+                        dDay = nearestItem.dDay ?: "",
+                        totalAmount = groupItems.sumOf { it.price ?: 0L },
+                        items = groupItems
+                    )
+                } else {
+                    null
+                }
+                val finalSubscriptionList = sortedActiveList + pausedList
                 HomeUiState.Success(
-                    subscriptionList = processedList,
+                    subscriptionList = finalSubscriptionList,
                     nextPaymentInfo = nextPaymentInfo
                 )
-
             }
         }
         .stateIn(
