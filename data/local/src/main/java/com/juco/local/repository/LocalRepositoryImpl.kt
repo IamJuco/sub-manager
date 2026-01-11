@@ -22,8 +22,8 @@ class LocalRepositoryImpl @Inject constructor(
         subscriptionDao.update(subscription.toEntity())
     }
 
-    override suspend fun deleteSubscription(subscription: Subscription) {
-        subscriptionDao.delete(subscription.toEntity())
+    override suspend fun deleteSubscription(subId: Long) {
+        subscriptionDao.delete(subId)
     }
 
     override fun getAllSubscriptions(): Flow<List<Subscription>> {

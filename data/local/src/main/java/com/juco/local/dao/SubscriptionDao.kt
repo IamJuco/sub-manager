@@ -17,8 +17,8 @@ interface SubscriptionDao {
     @Update
     suspend fun update(subscription: SubscriptionEntity)
 
-    @Delete
-    suspend fun delete(subscription: SubscriptionEntity)
+    @Query("DELETE FROM subscriptions WHERE subId = :subId")
+    suspend fun delete(subId: Long)
 
     @Query("SELECT * FROM subscriptions ORDER BY subId DESC")
     fun getAll(): Flow<List<SubscriptionEntity>>
