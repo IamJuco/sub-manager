@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import com.juco.home.navigation.homeNavGraph
+import com.juco.setting.navigation.settingNavGraph
 import com.juco.subscription_add.add.navigation.subscriptionAddNavGraph
 import com.juco.subscription_add.intro.navigation.subscriptionAddIntroNavGraph
 import com.juco.subscription_detail.navigation.subscriptionDetailNavGraph
@@ -47,6 +48,9 @@ fun MainNavHost(
             padding = padding,
             onPopBackStack = navigator::popBackStack,
             onShowSnackBar = onShowSnackBar
+        )
+        settingNavGraph(
+            padding = padding
         )
     }
 }

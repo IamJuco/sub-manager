@@ -12,6 +12,7 @@ android {
 
 dependencies {
     implementation(projects.feature.home)
+    implementation(projects.feature.setting)
     implementation(projects.feature.subscriptionAdd)
     implementation(projects.feature.subscriptionDetail)
     implementation(projects.core.designsystem)

@@ -15,6 +15,7 @@ import com.juco.common.navigation.MainRouteModel
 import com.juco.common.navigation.RouteModel
 import com.juco.home.navigation.navigateToHome
 import com.juco.main.component.MainMenu
+import com.juco.setting.navigation.navigateToSetting
 import com.juco.subscription_add.add.navigation.navigateToSubscriptionAdd
 import com.juco.subscription_add.intro.navigation.navigateToSubscriptionAddIntro
 import com.juco.subscription_detail.navigation.navigateToSubscriptionDetail
@@ -38,7 +39,6 @@ class MainNavigator(
     fun navigate(menu: MainMenu) {
         val navOptions = navOptions {
             popUpTo(navController.graph.findStartDestination().id) {
-                inclusive = menu == MainMenu.HOME
                 saveState = true
             }
             launchSingleTop = true
@@ -47,11 +47,12 @@ class MainNavigator(
 
         when (menu) {
             MainMenu.HOME -> navController.navigateToHome(navOptions)
-            MainMenu.SETTING -> {}
+            MainMenu.SETTING -> navController.navigateToSetting(navOptions)
         }
     }
 
     fun navigateToHome() = navController.navigateToHome(navOptions = singleTopOptions)
+    fun navigateToSetting() = navController.navigateToSetting(navOptions = singleTopOptions)
     fun navigateToSubscriptionAddIntro() =
         navController.navigateToSubscriptionAddIntro(navOptions = singleTopOptions)
 
