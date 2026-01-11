@@ -5,9 +5,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -70,16 +74,18 @@ fun HomeScreen(
     subscriptionList: List<SubscriptionInfo> = emptyList(),
     nextPaymentInfo: NextPaymentInfo? = null
 ) {
-    Box(
+    Column(
         modifier = modifier
             .fillMaxSize()
-            .background(SubManagerTheme.colors.primaryBackground)
-            .padding(padding)
+
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
+                .background(SubManagerTheme.colors.primaryBackground)
+                .padding(padding)
                 .padding(horizontal = 16.dp)
+                .weight(1f)
         ) {
             SubManagerMenuTopBar(
                 modifier = Modifier.padding(top = 16.dp, bottom = 16.dp),
@@ -87,13 +93,11 @@ fun HomeScreen(
             )
 
             LazyColumn(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(bottom = 48.dp + 16.dp + 20.dp)
             ) {
                 item {
-
-                    NextPaymentSection(
-                        nextPaymentInfo = nextPaymentInfo
-                    )
+                    NextPaymentSection(nextPaymentInfo = nextPaymentInfo)
 
                     Spacer(modifier = Modifier.height(32.dp))
 
@@ -114,30 +118,27 @@ fun HomeScreen(
 
                     SubscriptionItem(
                         subscription = item,
-                        onClick = {
-                            navigateToSubscriptionDetail(
-                                item.subId ?: 0
-                            )
-                        }
+                        onClick = { navigateToSubscriptionDetail(item.subId ?: 0) }
                     )
 
                     if (index < subscriptionList.lastIndex) {
                         Spacer(modifier = Modifier.height(16.dp))
                     }
                 }
-
-                item {
-                    Spacer(Modifier.height(80.dp))
-                }
             }
         }
-
-        SubManagerFloatingButton(
+        Box(
             modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .padding(16.dp),
-            onClick = navigateToSubscriptionAddIntro
-        )
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+                .windowInsetsPadding(WindowInsets.navigationBars)
+                .padding(bottom = 48.dp + 16.dp),
+            contentAlignment = Alignment.CenterEnd
+        ) {
+            SubManagerFloatingButton(
+                onClick = navigateToSubscriptionAddIntro
+            )
+        }
     }
 }
 
