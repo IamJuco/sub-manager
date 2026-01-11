@@ -13,11 +13,29 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.juco.designsystem.component.button.SubManagerButton
 import com.juco.designsystem.theme.SubManagerTheme
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 
 @Composable
 fun SettingSection(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onEditClick: () -> Unit = {},
+    onDeleteClick: () -> Unit
 ) {
+    var showDeleteDialog by remember { mutableStateOf(false) }
+
+    if (showDeleteDialog) {
+        DeleteDialog(
+            onDismissRequest = { showDeleteDialog = false },
+            onConfirm = {
+                showDeleteDialog = false
+                onDeleteClick()
+            }
+        )
+    }
+
     Column(
         modifier = modifier
     ) {
@@ -36,13 +54,14 @@ fun SettingSection(
             SubManagerButton(
                 modifier = Modifier.weight(1f),
                 text = "수정 하기",
-                onClick = {
-                }
+                onClick = onEditClick
             )
+
             SubManagerButton(
                 modifier = Modifier.weight(1f),
                 text = "삭제 하기",
                 onClick = {
+                    showDeleteDialog = true
                 }
             )
         }
@@ -53,6 +72,9 @@ fun SettingSection(
 @Composable
 private fun SettingSectionPreview() {
     SubManagerTheme {
-        SettingSection()
+        SettingSection(
+            onDeleteClick = {},
+            onEditClick = {}
+        )
     }
 }
