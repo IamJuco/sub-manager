@@ -33,6 +33,9 @@ val DisabledTextDark = Color(0xFF6B7280)
 val OutlineLight = Color(0xFFD1D5DB)
 val OutlineDark = Color(0xFF4B5563)
 
+val RedLight = Color(0xFFFF3B30)
+val RedDark = Color(0xFFFF453A)
+
 @Stable
 class SubManagerColors(
     primaryBackground: Color,
@@ -43,7 +46,8 @@ class SubManagerColors(
     button: Color,
     disabledBackground: Color,
     disabledText: Color,
-    outline: Color
+    outline: Color,
+    red: Color
 ) {
     var primaryBackground by mutableStateOf(primaryBackground)
         private set
@@ -62,6 +66,8 @@ class SubManagerColors(
     var disabledText by mutableStateOf(disabledText)
         private set
     var outline by mutableStateOf(outline)
+        private set
+    var red by mutableStateOf(red)
         private set
 
     fun copy(
@@ -83,7 +89,8 @@ class SubManagerColors(
         button,
         disabledBackground,
         disabledText,
-        outline
+        outline,
+        red
     )
 
     fun update(other: SubManagerColors) {
@@ -96,6 +103,7 @@ class SubManagerColors(
         disabledBackground = other.disabledBackground
         disabledText = other.disabledText
         outline = other.outline
+        red = other.red
     }
 }
 
@@ -108,7 +116,8 @@ fun SubManagerLightColors(
     Button: Color = ButtonLight,
     DisabledBackground: Color = DisabledBackgroundLight,
     DisabledText: Color = DisabledTextLight,
-    Outline: Color = OutlineLight
+    Outline: Color = OutlineLight,
+    red: Color = RedLight
 ) = SubManagerColors(
     PrimaryBackground,
     SecondaryBackground,
@@ -118,7 +127,8 @@ fun SubManagerLightColors(
     Button,
     DisabledBackground,
     DisabledText,
-    Outline
+    Outline,
+    red
 )
 
 fun SubManagerDarkColors(
@@ -130,7 +140,8 @@ fun SubManagerDarkColors(
     Button: Color = ButtonDark,
     DisabledBackground: Color = DisabledBackgroundDark,
     DisabledText: Color = DisabledTextDark,
-    Outline: Color = OutlineDark
+    Outline: Color = OutlineDark,
+    red: Color = RedDark
 ) = SubManagerColors(
     PrimaryBackground,
     SecondaryBackground,
@@ -140,5 +151,6 @@ fun SubManagerDarkColors(
     Button,
     DisabledBackground,
     DisabledText,
-    Outline
+    Outline,
+    red
 )
