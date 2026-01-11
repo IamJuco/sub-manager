@@ -1,5 +1,12 @@
 package com.juco.main.component
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -28,15 +35,28 @@ fun BottomNavigationBar(
     onMenuSelected: (MainMenu) -> Unit,
     isVisible: Boolean
 ) {
-    if (isVisible) {
+    AnimatedVisibility(
+        visible = isVisible,
+        enter = slideInVertically(initialOffsetY = { it }) +
+                expandVertically(expandFrom = Alignment.Top) +
+                fadeIn(),
+        exit = slideOutVertically(targetOffsetY = { it }) +
+                shrinkVertically(shrinkTowards = Alignment.Top) +
+                fadeOut()
+    ) {
         Column(
             modifier = modifier
         ) {
             Box(
-                modifier = Modifier.fillMaxWidth().background(SubManagerTheme.colors.primaryBackground)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(SubManagerTheme.colors.primaryBackground)
             ) {
                 Row(
-                    modifier = Modifier.fillMaxWidth().navigationBarsPadding().height(48.dp)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .navigationBarsPadding()
+                        .height(48.dp)
                 ) {
                     MainMenu.entries.forEach { menu ->
                         val selected = menu == currentMenu
