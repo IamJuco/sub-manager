@@ -10,10 +10,13 @@ import com.juco.common.util.PaymentCycleType
 import com.juco.common.util.formatDate
 import com.juco.common.util.totalAmountCalculator
 import com.juco.subscription_detail.model.SubscriptionDetailInfo
+import com.juco.subscription_detail.sideeffect.SubscriptionDetailSideEffect
 import com.juco.subscription_detail.state.SubscriptionDetailUiState
 import com.juco.subscription_detail.util.nextPaymentCalculator
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -25,6 +28,9 @@ class SubscriptionDetailViewModel @Inject constructor(
     private val _uiState =
         MutableStateFlow<SubscriptionDetailUiState>(SubscriptionDetailUiState.Loading)
     val uiState = _uiState.asStateFlow()
+
+    private val _sideEffect = Channel<SubscriptionDetailSideEffect>()
+    val sideEffect = _sideEffect.receiveAsFlow()
 
     fun loadSubscription(subId: Long) {
         viewModelScope.launch {
@@ -130,6 +136,19 @@ class SubscriptionDetailViewModel @Inject constructor(
                 _uiState.update {
                     SubscriptionDetailUiState.Success(currentInfo)
                 }
+            }
+        }
+    }
+
+    fun deleteSubscription(subId: Long) {
+        viewModelScope.launch {
+            _uiState.update { SubscriptionDetailUiState.Loading }
+            runCatching {
+                localRepository.deleteSubscription(subId)
+            }.onSuccess {
+                _sideEffect.send(SubscriptionDetailSideEffect.NavigateToHome)
+            }.onFailure {
+                _sideEffect.send(SubscriptionDetailSideEffect.ShowSnackBar)
             }
         }
     }

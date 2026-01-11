@@ -28,6 +28,7 @@ import com.juco.subscription_detail.component.PaymentSection
 import com.juco.subscription_detail.component.PauseSection
 import com.juco.subscription_detail.component.SettingSection
 import com.juco.subscription_detail.model.SubscriptionDetailInfo
+import com.juco.subscription_detail.sideeffect.SubscriptionDetailSideEffect
 import com.juco.subscription_detail.state.SubscriptionDetailUiState
 
 @Composable
@@ -44,6 +45,20 @@ fun SubscriptionDetailRoute(
         viewModel.loadSubscription(subId)
     }
 
+    LaunchedEffect(viewModel.sideEffect) {
+        viewModel.sideEffect.collect { effect ->
+            when (effect) {
+                is SubscriptionDetailSideEffect.NavigateToHome -> {
+                    onShowSnackBar("삭제에 성공했습니다.")
+                    onPopBackStack()
+                }
+                is SubscriptionDetailSideEffect.ShowSnackBar -> {
+                    onShowSnackBar("삭제에 실패했습니다.")
+                }
+            }
+        }
+    }
+
     when (val state = uiState) {
         is SubscriptionDetailUiState.Loading -> {
             SubManagerLoadingBar()
@@ -56,7 +71,8 @@ fun SubscriptionDetailRoute(
                 subscription = state.subscription,
                 onNotificationToggle = viewModel::updateNotification,
                 onPauseToggle = viewModel::updatePause,
-                onShowSnackBar = onShowSnackBar
+                onShowSnackBar = onShowSnackBar,
+                onDeleteClick = { viewModel.deleteSubscription(subId) }
             )
         }
 
@@ -76,7 +92,8 @@ fun SubscriptionDetailScreen(
     onShowSnackBar: (String) -> Unit,
     subscription: SubscriptionDetailInfo,
     onNotificationToggle: (Boolean) -> Unit,
-    onPauseToggle: (Boolean) -> Unit
+    onPauseToggle: (Boolean) -> Unit,
+    onDeleteClick: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -160,7 +177,9 @@ fun SubscriptionDetailScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        SettingSection()
+        SettingSection(
+            onDeleteClick = onDeleteClick
+        )
 
         Spacer(modifier = Modifier.height(50.dp))
     }
@@ -187,7 +206,8 @@ private fun SubscriptionDetailScreenPreview() {
             ),
             onNotificationToggle = {},
             onPauseToggle = {},
-            onShowSnackBar = {}
+            onShowSnackBar = {},
+            onDeleteClick = {}
         )
     }
 }
