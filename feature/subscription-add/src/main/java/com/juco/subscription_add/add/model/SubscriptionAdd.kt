@@ -6,5 +6,6 @@ data class SubscriptionAdd(
     val paymentDay: Long? = null,
     val paymentCycleType: String? = null,
     val paymentCycleValue: Int? = null,
-    val enableNotification: Boolean
+    val enableNotification: Boolean,
+    val description: String? = null
 )
