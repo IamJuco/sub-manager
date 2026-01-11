@@ -74,18 +74,19 @@ fun HomeScreen(
     subscriptionList: List<SubscriptionInfo> = emptyList(),
     nextPaymentInfo: NextPaymentInfo? = null
 ) {
-    Column(
+    val BOTTOM_BAR_HEIGHT = 48.dp
+    val FAB_MARGIN = 16.dp
+
+    Box(
         modifier = modifier
             .fillMaxSize()
-
+            .background(SubManagerTheme.colors.primaryBackground)
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .background(SubManagerTheme.colors.primaryBackground)
+                .fillMaxSize()
                 .padding(padding)
                 .padding(horizontal = 16.dp)
-                .weight(1f)
         ) {
             SubManagerMenuTopBar(
                 modifier = Modifier.padding(top = 16.dp, bottom = 16.dp),
@@ -94,19 +95,18 @@ fun HomeScreen(
 
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(bottom = 48.dp + 16.dp + 20.dp)
+                contentPadding = PaddingValues(
+                    bottom = BOTTOM_BAR_HEIGHT + FAB_MARGIN + 60.dp
+                )
             ) {
                 item {
                     NextPaymentSection(nextPaymentInfo = nextPaymentInfo)
-
                     Spacer(modifier = Modifier.height(32.dp))
-
                     Text(
                         text = "구독 리스트",
                         style = SubManagerTheme.typography.h3SemiBold,
                         color = SubManagerTheme.colors.primaryText
                     )
-
                     Spacer(modifier = Modifier.height(8.dp))
                 }
 
@@ -115,25 +115,23 @@ fun HomeScreen(
                     key = { index -> subscriptionList[index].subId ?: index }
                 ) { index ->
                     val item = subscriptionList[index]
-
                     SubscriptionItem(
                         subscription = item,
                         onClick = { navigateToSubscriptionDetail(item.subId ?: 0) }
                     )
-
                     if (index < subscriptionList.lastIndex) {
                         Spacer(modifier = Modifier.height(16.dp))
                     }
                 }
             }
         }
+
         Box(
             modifier = Modifier
-                .fillMaxWidth()
+                .align(Alignment.BottomEnd)
                 .padding(horizontal = 16.dp)
                 .windowInsetsPadding(WindowInsets.navigationBars)
-                .padding(bottom = 48.dp + 16.dp),
-            contentAlignment = Alignment.CenterEnd
+                .padding(bottom = BOTTOM_BAR_HEIGHT + FAB_MARGIN),
         ) {
             SubManagerFloatingButton(
                 onClick = navigateToSubscriptionAddIntro
