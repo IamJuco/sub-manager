@@ -19,6 +19,7 @@ import com.juco.setting.navigation.navigateToSetting
 import com.juco.subscription_add.add.navigation.navigateToSubscriptionAdd
 import com.juco.subscription_add.intro.navigation.navigateToSubscriptionAddIntro
 import com.juco.subscription_detail.navigation.navigateToSubscriptionDetail
+import com.juco.subscription_edit.navigation.navigateToSubscriptionEdit
 
 class MainNavigator(
     val navController: NavHostController
@@ -70,6 +71,9 @@ class MainNavigator(
 
     fun navigateToSubscriptionDetail(subId: Long) =
         navController.navigateToSubscriptionDetail(subId = subId, navOptions = singleTopOptions)
+
+    fun navigateToSubscriptionEdit(subId: Long) =
+        navController.navigateToSubscriptionEdit(subId = subId, navOptions = singleTopOptions)
 
     fun popBackStack() = navController.popBackStack()
     fun popAllBackStack(destination: RouteModel) =

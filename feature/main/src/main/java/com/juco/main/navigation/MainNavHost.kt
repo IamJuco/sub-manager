@@ -11,6 +11,7 @@ import com.juco.setting.navigation.settingNavGraph
 import com.juco.subscription_add.add.navigation.subscriptionAddNavGraph
 import com.juco.subscription_add.intro.navigation.subscriptionAddIntroNavGraph
 import com.juco.subscription_detail.navigation.subscriptionDetailNavGraph
+import com.juco.subscription_edit.navigation.subscriptionEditNavGraph
 
 @Composable
 fun MainNavHost(
@@ -47,7 +48,12 @@ fun MainNavHost(
         subscriptionDetailNavGraph(
             padding = padding,
             onPopBackStack = navigator::popBackStack,
-            onShowSnackBar = onShowSnackBar
+            onShowSnackBar = onShowSnackBar,
+            navigateToSubscriptionEdit = navigator::navigateToSubscriptionEdit
+        )
+        subscriptionEditNavGraph(
+            padding = padding,
+            onPopBackStack = navigator::popBackStack
         )
         settingNavGraph(
             padding = padding

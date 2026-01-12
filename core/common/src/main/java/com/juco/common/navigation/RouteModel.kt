@@ -12,6 +12,9 @@ sealed interface RouteModel {
     @Serializable
     data class SubscriptionDetail(val subId: Long) : RouteModel
 
+    @Serializable
+    data class SubscriptionEdit(val subId: Long) : RouteModel
+
 }
 
 sealed interface MainRouteModel : RouteModel {
