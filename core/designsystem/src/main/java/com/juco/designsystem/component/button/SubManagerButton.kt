@@ -1,9 +1,14 @@
 package com.juco.designsystem.component.button
 
+import android.content.res.Configuration
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -27,20 +32,18 @@ fun SubManagerButton(
     enabledTextColor: Color = SubManagerTheme.colors.primaryBackground,
     disabledTextColor: Color = SubManagerTheme.colors.primaryText,
     enabledBackgroundColor: Color = SubManagerTheme.colors.primaryText,
-    disabledBackgroundColor: Color = SubManagerTheme.colors.primaryText
-
+    disabledBackgroundColor: Color = SubManagerTheme.colors.disabledBackground
 ) {
-    val backgroundColor = if (enabled) enabledBackgroundColor else disabledBackgroundColor
-    val contentColor = if (enabled) enabledTextColor else disabledTextColor
-
     Button(
         onClick = onClick,
         modifier = modifier,
         enabled = enabled,
         shape = RoundedCornerShape(16.dp),
         colors = ButtonDefaults.buttonColors(
-            containerColor = backgroundColor,
-            contentColor = contentColor
+            containerColor = enabledBackgroundColor,
+            contentColor = enabledTextColor,
+            disabledContainerColor = disabledBackgroundColor,
+            disabledContentColor = disabledTextColor
         ),
         contentPadding = PaddingValues(16.dp)
     ) {
@@ -50,7 +53,6 @@ fun SubManagerButton(
             Text(
                 text = text,
                 style = textStyle,
-                color = contentColor
             )
         }
     }
@@ -58,24 +60,46 @@ fun SubManagerButton(
 
 @Preview(showBackground = true)
 @Composable
-private fun SubManagerButtonPreview() {
+private fun SubManagerButtonLightPreview() {
     SubManagerTheme {
-        Column {
+        Column(
+            modifier = Modifier
+                .background(SubManagerTheme.colors.primaryBackground)
+                .padding(horizontal = 16.dp)
+        ) {
             SubManagerButton(
                 modifier = Modifier.fillMaxWidth(),
                 text = "완료",
                 onClick = {},
                 enabled = true
             )
+            Spacer(modifier = Modifier.height(8.dp))
+            SubManagerButton(
+                modifier = Modifier.fillMaxWidth(),
+                text = "완료",
+                onClick = {},
+                enabled = false
+            )
         }
     }
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true, uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Composable
-private fun SubManagerButtonPreview2() {
+private fun SubManagerButtonDarkPreview() {
     SubManagerTheme {
-        Column {
+        Column(
+            modifier = Modifier
+                .background(SubManagerTheme.colors.primaryBackground)
+                .padding(horizontal = 16.dp)
+        ) {
+            SubManagerButton(
+                modifier = Modifier.fillMaxWidth(),
+                text = "완료",
+                onClick = {},
+                enabled = true
+            )
+            Spacer(modifier = Modifier.height(8.dp))
             SubManagerButton(
                 modifier = Modifier.fillMaxWidth(),
                 text = "완료",
