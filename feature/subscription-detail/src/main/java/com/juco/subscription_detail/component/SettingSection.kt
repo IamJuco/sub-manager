@@ -21,7 +21,7 @@ import androidx.compose.runtime.setValue
 @Composable
 fun SettingSection(
     modifier: Modifier = Modifier,
-    onEditClick: () -> Unit = {},
+    onEditClick: () -> Unit,
     onDeleteClick: () -> Unit
 ) {
     var showDeleteDialog by remember { mutableStateOf(false) }

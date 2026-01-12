@@ -37,6 +37,7 @@ fun SubscriptionDetailRoute(
     onPopBackStack: () -> Unit,
     onShowSnackBar: (String) -> Unit,
     subId: Long,
+    navigateToSubscriptionEdit: (Long) -> Unit,
     viewModel: SubscriptionDetailViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -72,6 +73,7 @@ fun SubscriptionDetailRoute(
                 onNotificationToggle = viewModel::updateNotification,
                 onPauseToggle = viewModel::updatePause,
                 onShowSnackBar = onShowSnackBar,
+                onEditClick = { navigateToSubscriptionEdit(subId) },
                 onDeleteClick = { viewModel.deleteSubscription(subId) }
             )
         }
@@ -93,6 +95,7 @@ fun SubscriptionDetailScreen(
     subscription: SubscriptionDetailInfo,
     onNotificationToggle: (Boolean) -> Unit,
     onPauseToggle: (Boolean) -> Unit,
+    onEditClick: () -> Unit,
     onDeleteClick: () -> Unit
 ) {
     Column(
@@ -178,7 +181,8 @@ fun SubscriptionDetailScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         SettingSection(
-            onDeleteClick = onDeleteClick
+            onDeleteClick = onDeleteClick,
+            onEditClick = onEditClick
         )
 
         Spacer(modifier = Modifier.height(50.dp))
@@ -207,7 +211,8 @@ private fun SubscriptionDetailScreenPreview() {
             onNotificationToggle = {},
             onPauseToggle = {},
             onShowSnackBar = {},
-            onDeleteClick = {}
+            onDeleteClick = {},
+            onEditClick = {}
         )
     }
 }

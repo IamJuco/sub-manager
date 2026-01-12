@@ -17,6 +17,7 @@ fun NavGraphBuilder.subscriptionDetailNavGraph(
     padding: PaddingValues,
     onPopBackStack: () -> Unit,
     onShowSnackBar: (String) -> Unit,
+    navigateToSubscriptionEdit: (Long) -> Unit
 ) {
     composable<RouteModel.SubscriptionDetail> { backStackEntry ->
         val subId = backStackEntry.toRoute<RouteModel.SubscriptionDetail>().subId
@@ -24,7 +25,8 @@ fun NavGraphBuilder.subscriptionDetailNavGraph(
             padding = padding,
             onPopBackStack = onPopBackStack,
             onShowSnackBar = onShowSnackBar,
-            subId = subId
+            subId = subId,
+            navigateToSubscriptionEdit = navigateToSubscriptionEdit
         )
     }
 }
