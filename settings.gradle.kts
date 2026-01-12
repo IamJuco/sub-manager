@@ -23,12 +23,18 @@ dependencyResolutionManagement {
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "submanager"
 include(":app")
+
+include(":data:local")
+
+include(":domain:local")
+
 include(":core:designsystem")
 include(":core:common")
+
 include(":feature:main")
 include(":feature:home")
 include(":feature:setting")
 include(":feature:subscription-add")
 include(":feature:subscription-detail")
-include(":data:local")
-include(":domain:local")
+include(":feature:subscription-edit")
+
