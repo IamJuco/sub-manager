@@ -99,7 +99,7 @@ fun PaymentSection(
         Spacer(modifier = Modifier.height(8.dp))
 
         Text(
-            text = "${NumberFormat.getIntegerInstance().format(subscription.totalAmount)}원",
+            text = "${NumberFormat.getIntegerInstance().format(subscription.totalAmount ?: 0)}원",
             style = SubManagerTheme.typography.b2Regular,
             color = SubManagerTheme.colors.primaryText,
         )
