@@ -53,7 +53,8 @@ fun MainNavHost(
         )
         subscriptionEditNavGraph(
             padding = padding,
-            onPopBackStack = navigator::popBackStack
+            onPopBackStack = navigator::popBackStack,
+            onShowSnackBar = onShowSnackBar
         )
         settingNavGraph(
             padding = padding

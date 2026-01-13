@@ -16,13 +16,15 @@ fun NavController.navigateToSubscriptionEdit(subId: Long, navOptions: NavOptions
 fun NavGraphBuilder.subscriptionEditNavGraph(
     padding: PaddingValues,
     onPopBackStack: () -> Unit,
+    onShowSnackBar: (String) -> Unit
 ) {
     composable<RouteModel.SubscriptionEdit> { backStackEntry ->
         val subId = backStackEntry.toRoute<RouteModel.SubscriptionEdit>().subId
         SubscriptionEditRoute(
             padding = padding,
             onPopBackStack = onPopBackStack,
-            subId = subId
+            subId = subId,
+            onShowSnackBar = onShowSnackBar
         )
     }
 }
