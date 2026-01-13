@@ -1,21 +1,32 @@
 package com.juco.subscription_edit
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.juco.designsystem.component.SubManagerTopBar
+import com.juco.designsystem.component.button.SubManagerButton
+import com.juco.designsystem.component.loading.SubManagerLoadingBar
 import com.juco.designsystem.theme.SubManagerTheme
 import com.juco.submanager.core.designsystem.R
 import com.juco.subscription_edit.component.DescriptionSection
@@ -24,25 +35,56 @@ import com.juco.subscription_edit.component.PaymentCycleSection
 import com.juco.subscription_edit.component.PaymentDateSection
 import com.juco.subscription_edit.component.PriceInputSection
 import com.juco.subscription_edit.component.ProfileSection
+import com.juco.subscription_edit.mapper.toPaymentCycle
 import com.juco.subscription_edit.model.SubscriptionInfo
+import com.juco.subscription_edit.sideeffect.SubscriptionEditSideEffect
+import com.juco.subscription_edit.state.SubscriptionEditUiState
 
 @Composable
 fun SubscriptionEditRoute(
     padding: PaddingValues,
     onPopBackStack: () -> Unit,
     subId: Long,
+    onShowSnackBar: (String) -> Unit,
     viewModel: SubscriptionEditViewModel = hiltViewModel()
 ) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(subId) {
         viewModel.loadSubscription(subId)
     }
 
-    SubscriptionEditScreen(
-        padding = padding,
-        onPopBackStack = onPopBackStack,
-        subscription = SubscriptionInfo()
-    )
+    LaunchedEffect(viewModel.sideEffectFlow) {
+        viewModel.sideEffectFlow.collect { event ->
+            when (event) {
+                is SubscriptionEditSideEffect.ShowSnackBar -> onShowSnackBar(event.message)
+                is SubscriptionEditSideEffect.UpdateSuccess -> onPopBackStack()
+            }
+        }
+    }
+
+    when (val state = uiState) {
+        is SubscriptionEditUiState.Loading -> {
+            SubManagerLoadingBar()
+        }
+        is SubscriptionEditUiState.Error -> {
+            LaunchedEffect(Unit) { onPopBackStack() }
+        }
+        is SubscriptionEditUiState.Success -> {
+            Box(modifier = Modifier.fillMaxSize()) {
+                SubscriptionEditScreen(
+                    padding = padding,
+                    onPopBackStack = onPopBackStack,
+                    subscription = state.subscription,
+                    onUpdateClick = viewModel::updateSubscription
+                )
+
+                if (state.isUpdating) {
+                    SubManagerLoadingBar()
+                }
+            }
+        }
+    }
 }
 
 @Composable
@@ -50,8 +92,15 @@ fun SubscriptionEditScreen(
     modifier: Modifier = Modifier,
     padding: PaddingValues,
     onPopBackStack: () -> Unit,
-    subscription: SubscriptionInfo
+    subscription: SubscriptionInfo,
+    onUpdateClick: (SubscriptionInfo) -> Unit
 ) {
+    var name by remember(subscription) { mutableStateOf(subscription.name ?: "") }
+    var description by remember(subscription) { mutableStateOf(subscription.description ?: "") }
+    var price by remember(subscription) { mutableStateOf(subscription.price?.toString() ?: "") }
+    var selectedDate by remember(subscription) { mutableLongStateOf(subscription.paymentDay ?: 0L) }
+    var paymentCycle by remember(subscription) { mutableStateOf(subscription.toPaymentCycle()) }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -76,40 +125,69 @@ fun SubscriptionEditScreen(
         Spacer(Modifier.height(32.dp))
 
         NameInputSection(
-            value = "",
-            onValueChange = {}
+            value = name,
+            onValueChange = { name = it }
         )
 
         Spacer(Modifier.height(32.dp))
 
         DescriptionSection(
-            value = "",
-            onValueChange = {}
+            value = description,
+            onValueChange = { description = it }
         )
 
         Spacer(Modifier.height(32.dp))
 
         PriceInputSection(
-            value = "",
-            onValueChange = {}
+            value = price,
+            onValueChange = { price = it }
         )
 
         Spacer(Modifier.height(32.dp))
 
         PaymentDateSection(
-            selectedDate = 0,
-            onDateChanged = {}
+            selectedDate = selectedDate,
+            onDateChanged = { selectedDate = it }
         )
 
         Spacer(Modifier.height(32.dp))
 
         PaymentCycleSection(
-            paymentCycle = "",
-            onValueChange = {}
+            paymentCycle = paymentCycle.toDisplayText(),
+            onValueChange = { paymentCycle = it }
         )
 
-    }
+        Spacer(Modifier.height(32.dp))
 
+        HorizontalDivider(
+            color = SubManagerTheme.colors.primaryText,
+            thickness = 1.dp
+        )
+
+        Spacer(modifier = Modifier.height(32.dp))
+
+        SubManagerButton(
+            modifier = Modifier.fillMaxWidth(),
+            text = "수정 완료",
+            onClick = {
+                onUpdateClick(
+                    SubscriptionInfo(
+                        subId = subscription.subId,
+                        thumbnail = subscription.thumbnail,
+                        name = name,
+                        description = description,
+                        price = price.toLongOrNull() ?: 0L,
+                        paymentDay = selectedDate,
+                        paymentCycleType = paymentCycle.type.name,
+                        paymentCycleValue = paymentCycle.value
+                    )
+                )
+            }
+        )
+
+        Spacer(Modifier.height(50.dp))
+
+    }
 }
 
 @Preview(showBackground = true)
@@ -119,7 +197,8 @@ private fun SubscriptionEditScreenPreview() {
         SubscriptionEditScreen(
             padding = PaddingValues(),
             onPopBackStack = {},
-            subscription = SubscriptionInfo()
+            subscription = SubscriptionInfo(),
+            onUpdateClick = {}
         )
     }
 }
