@@ -38,3 +38,4 @@ include(":feature:subscription-add")
 include(":feature:subscription-detail")
 include(":feature:subscription-edit")
 
+include(":work")
