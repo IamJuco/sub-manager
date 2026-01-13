@@ -34,6 +34,8 @@ hilt = "2.57"
 hiltManager = "1.2.0"
 javax-inject = "1"
 
+work = "2.11.0"
+
 okhttp = "5.1.0"
 retrofit = "3.0.0"
 retrofitJsonConverter = "1.0.0"
@@ -101,6 +103,10 @@ hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-comp
 androidx-hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hiltManager" }
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltManager" }
 javax-inject = { group = "javax.inject", name = "javax.inject", version.ref = "javax-inject" }
+hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "hiltManager" }
+
+## WorkManager
+work = { module = "androidx.work:work-runtime-ktx", version.ref = "work" }
 
 ## gradle plugins
 android-gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }

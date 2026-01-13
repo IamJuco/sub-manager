@@ -26,6 +26,7 @@ android {
 dependencies {
     implementation(projects.feature.main)
     implementation(projects.data.local)
+    implementation(projects.work)
 
     implementation(libs.androidx.appcompat)
     implementation(libs.timber)
