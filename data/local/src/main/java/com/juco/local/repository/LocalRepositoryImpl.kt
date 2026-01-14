@@ -32,6 +32,10 @@ class LocalRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getActiveSubscriptions(): List<Subscription> {
+        return subscriptionDao.getActiveSubscriptions().map { it.toDomain() }
+    }
+
     override suspend fun getSubscriptionById(subId: Long): Subscription {
         return subscriptionDao.getSubscriptionById(subId).toDomain()
     }

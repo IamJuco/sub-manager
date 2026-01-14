@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.juco.local.entity.SubscriptionEntity
-import androidx.room.Delete
 import androidx.room.OnConflictStrategy
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
@@ -22,6 +21,9 @@ interface SubscriptionDao {
 
     @Query("SELECT * FROM subscriptions ORDER BY subId DESC")
     fun getAll(): Flow<List<SubscriptionEntity>>
+
+    @Query("SELECT * FROM subscriptions WHERE isPaused = 0 AND enableNotification = 1")
+    suspend fun getActiveSubscriptions(): List<SubscriptionEntity>
 
     @Query("SELECT * FROM subscriptions WHERE subId = :subId")
     suspend fun getSubscriptionById(subId: Long): SubscriptionEntity
