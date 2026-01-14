@@ -2,10 +2,10 @@ package com.juco.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.juco.common.util.nextPaymentCalculator
 import com.juco.home.model.NextPaymentInfo
 import com.juco.home.model.SubscriptionInfo
 import com.juco.home.state.HomeUiState
-import com.juco.home.util.nextPaymentCalculator
 import com.juco.local.repository.LocalRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -37,7 +37,7 @@ class HomeViewModel @Inject constructor(
                         description = subscription.description,
                         nextPaymentDate = result.formattedDate,
                         dDay = result.dDay,
-                        rawDate = result.rawDate,
+                        rawDate = result.nextPaymentDate,
                         isPaused = subscription.isPaused
                     )
                 }
