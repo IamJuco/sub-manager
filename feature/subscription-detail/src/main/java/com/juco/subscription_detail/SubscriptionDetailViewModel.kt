@@ -8,11 +8,11 @@ import androidx.lifecycle.viewModelScope
 import com.juco.common.util.PaymentCycle
 import com.juco.common.util.PaymentCycleType
 import com.juco.common.util.formatDate
+import com.juco.common.util.nextPaymentCalculator
 import com.juco.common.util.totalAmountCalculator
 import com.juco.subscription_detail.model.SubscriptionDetailInfo
 import com.juco.subscription_detail.sideeffect.SubscriptionDetailSideEffect
 import com.juco.subscription_detail.state.SubscriptionDetailUiState
-import com.juco.subscription_detail.util.nextPaymentCalculator
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
