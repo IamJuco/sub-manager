@@ -28,6 +28,9 @@ dependencies {
     implementation(projects.data.local)
     implementation(projects.work)
 
+    implementation(libs.work)
+    implementation(libs.hilt.work)
+
     implementation(libs.androidx.appcompat)
     implementation(libs.timber)
 }
