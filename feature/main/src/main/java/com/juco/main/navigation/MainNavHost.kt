@@ -18,7 +18,10 @@ fun MainNavHost(
     navigator: MainNavigator,
     padding: PaddingValues,
     onShowSnackBar: (String) -> Unit,
-    context: Context
+    context: Context,
+    appVersion: String,
+    isAppUpdateAvailable: Boolean,
+    onUpdateClick: () -> Unit
 ) {
     NavHost(
         navController = navigator.navController,
@@ -57,7 +60,10 @@ fun MainNavHost(
             onShowSnackBar = onShowSnackBar
         )
         settingNavGraph(
-            padding = padding
+            padding = padding,
+            appVersion = appVersion,
+            isAppUpdateAvailable = isAppUpdateAvailable,
+            onUpdateClick = onUpdateClick
         )
     }
 }

@@ -23,7 +23,10 @@ import kotlinx.coroutines.launch
 @Composable
 fun MainScreen(
     navigator: MainNavigator = rememberMainNavigator(),
-    context: Context = LocalContext.current
+    context: Context = LocalContext.current,
+    appVersion: String,
+    isAppUpdateAvailable: Boolean,
+    onUpdateClick: () -> Unit
 ) {
     val lifecycleScope = LocalLifecycleOwner.current.lifecycleScope
     val snackBarHostState = remember { SnackbarHostState() }
@@ -44,7 +47,10 @@ fun MainScreen(
                 navigator = navigator,
                 onShowSnackBar = onShowSnackBar,
                 padding = paddingValues,
-                context = context
+                context = context,
+                appVersion = appVersion,
+                isAppUpdateAvailable = isAppUpdateAvailable,
+                onUpdateClick = onUpdateClick
             )
         },
         bottomBar = {

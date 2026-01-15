@@ -13,11 +13,17 @@ fun NavController.navigateToSetting(navOptions: NavOptions) {
 }
 
 fun NavGraphBuilder.settingNavGraph(
-    padding: PaddingValues
+    padding: PaddingValues,
+    appVersion: String,
+    isAppUpdateAvailable: Boolean,
+    onUpdateClick: () -> Unit
 ) {
     composable<MainRouteModel.Setting> {
         SettingRoute(
-            padding = padding
+            padding = padding,
+            appVersion = appVersion,
+            isAppUpdateAvailable = isAppUpdateAvailable,
+            onUpdateClick = onUpdateClick
         )
     }
 }
