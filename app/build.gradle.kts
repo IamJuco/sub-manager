@@ -33,9 +33,7 @@ dependencies {
     implementation(libs.hilt.work)
 
     implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
-    implementation(libs.firebase.config)
 
     implementation(libs.androidx.appcompat)
     implementation(libs.timber)
