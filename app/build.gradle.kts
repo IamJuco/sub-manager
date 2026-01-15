@@ -1,6 +1,8 @@
 plugins{
     id("com.juco.build_logic.convention.application")
     id("com.juco.build_logic.primitive.hilt")
+    alias(libs.plugins.gms.google.service)
+    alias(libs.plugins.firebase.crashlytics)
 }
 
 android {
@@ -9,7 +11,6 @@ android {
         debug {
             isMinifyEnabled = false
             isDebuggable = true
-            applicationIdSuffix = ".debug"
         }
 
         release {
@@ -30,6 +31,11 @@ dependencies {
 
     implementation(libs.work)
     implementation(libs.hilt.work)
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
+    implementation(libs.firebase.config)
 
     implementation(libs.androidx.appcompat)
     implementation(libs.timber)
