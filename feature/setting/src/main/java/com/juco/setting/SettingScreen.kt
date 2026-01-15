@@ -1,6 +1,7 @@
 package com.juco.setting
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -18,17 +20,26 @@ import com.juco.setting.component.VersionSection
 
 @Composable
 fun SettingRoute(
-    padding: PaddingValues
+    padding: PaddingValues,
+    appVersion: String,
+    isAppUpdateAvailable: Boolean,
+    onUpdateClick: () -> Unit
 ) {
     SettingScreen(
-        padding = padding
+        padding = padding,
+        appVersion = appVersion,
+        isAppUpdateAvailable = isAppUpdateAvailable,
+        onUpdateClick = onUpdateClick
     )
 }
 
 @Composable
 fun SettingScreen(
     modifier: Modifier = Modifier,
-    padding: PaddingValues
+    padding: PaddingValues,
+    appVersion: String,
+    isAppUpdateAvailable: Boolean,
+    onUpdateClick: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -53,7 +64,9 @@ fun SettingScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         VersionSection(
-            onClick = {}
+            appVersion = appVersion,
+            isAppUpdateAvailable = isAppUpdateAvailable,
+            onUpdateClick = onUpdateClick
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -72,7 +85,10 @@ fun SettingScreen(
 private fun SettingScreenPreview() {
     SubManagerTheme {
         SettingScreen(
-            padding = PaddingValues()
+            padding = PaddingValues(),
+            appVersion = "",
+            isAppUpdateAvailable = false,
+            onUpdateClick = {}
         )
     }
 }

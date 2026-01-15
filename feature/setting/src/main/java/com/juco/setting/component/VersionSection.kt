@@ -2,6 +2,7 @@ package com.juco.setting.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -11,23 +12,33 @@ import com.juco.designsystem.theme.SubManagerTheme
 @Composable
 fun VersionSection(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit
+    appVersion: String,
+    isAppUpdateAvailable: Boolean,
+    onUpdateClick: () -> Unit
 ) {
     Column(
-        modifier = Modifier.clickable {
-            onClick()
+        modifier = modifier.fillMaxWidth().clickable {
+            onUpdateClick()
         }
     ) {
         Text(
-            text = "버전 1.0.0",
+            text = "버전 $appVersion",
             style = SubManagerTheme.typography.h3SemiBold,
             color = SubManagerTheme.colors.primaryText,
         )
-        Text(
-            text = "버전을 업데이트해주세요.",
-            style = SubManagerTheme.typography.c1Regular,
-            color = SubManagerTheme.colors.secondaryText
-        )
+        if (isAppUpdateAvailable) {
+            Text(
+                text = "버전 업데이트가 필요합니다.",
+                style = SubManagerTheme.typography.c1Regular,
+                color = SubManagerTheme.colors.secondaryText
+            )
+        } else {
+            Text(
+                text = "최신 버전을 사용 중입니다.",
+                style = SubManagerTheme.typography.c1Regular,
+                color = SubManagerTheme.colors.secondaryText
+            )
+        }
     }
 }
 
@@ -36,7 +47,9 @@ fun VersionSection(
 private fun VersionSectionPreview() {
     SubManagerTheme {
         VersionSection(
-            onClick = {}
+            appVersion = "",
+            isAppUpdateAvailable = false,
+            onUpdateClick = {}
         )
     }
 }
