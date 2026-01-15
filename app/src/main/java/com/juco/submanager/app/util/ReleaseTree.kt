@@ -1,19 +1,23 @@
 package com.juco.submanager.app.util
 
 import android.util.Log
-import org.jetbrains.annotations.NotNull
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import timber.log.Timber
 
-class ReleaseTree : @NotNull Timber.Tree() {
-    override fun log(
-        priority: Int,
-        tag: String?,
-        message: String,
-        t: Throwable?,
-    ) {
-        // 추후 Release 버전에서 crashlytics에 보낼 로그
-        if (priority == Log.ERROR || priority == Log.WARN) {
+class ReleaseTree : Timber.Tree() {
+    override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+        if (priority == Log.VERBOSE || priority == Log.DEBUG) {
+            return
+        }
+        val crashlytics = FirebaseCrashlytics.getInstance()
+        crashlytics.log("[$tag] $message")
 
+        if (priority == Log.ERROR || priority == Log.WARN) {
+            if (t != null) {
+                crashlytics.recordException(t)
+            } else {
+                crashlytics.recordException(Exception(message))
+            }
         }
     }
 }
