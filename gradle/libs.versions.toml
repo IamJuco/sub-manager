@@ -4,8 +4,8 @@ minSdk = "26"
 targetSdk = "36"
 compileSdk = "36"
 jvmTarget = "17"
-versionCode = "1"
-versionName = "1.0"
+versionCode = "10000"
+versionName = "1.0.0"
 kotlinCompilerExtensionVersion = "1.5.2"
 
 junit = "4.13.2"
@@ -49,6 +49,7 @@ material = "1.13.0"
 gms = "4.4.4"
 firebaseBom = "32.7.1"
 firebaseCrashlyticsPlugin = "2.9.9"
+playAppUpdate = "2.1.0"
 
 [libraries]
 ## androidx
@@ -132,6 +133,9 @@ firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.r
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
 firebase-config = { group = "com.google.firebase", name = "firebase-config-ktx" }
+
+play-app-update = { group = "com.google.android.play", name = "app-update", version.ref = "playAppUpdate" }
+play-app-update-ktx = { group = "com.google.android.play", name = "app-update-ktx", version.ref = "playAppUpdate" }
 
 [bundles]
 coroutine = [
