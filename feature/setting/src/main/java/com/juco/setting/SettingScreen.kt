@@ -51,7 +51,7 @@ fun SettingScreen(
         SubManagerMenuTopBar(
             modifier = Modifier
                 .padding(top = 16.dp, bottom = 16.dp),
-            title = "세팅 화면"
+            title = "설정"
         )
 
         Spacer(modifier = Modifier.height(16.dp))

@@ -18,7 +18,9 @@ fun VersionSection(
 ) {
     Column(
         modifier = modifier.fillMaxWidth().clickable {
-            onUpdateClick()
+            if (isAppUpdateAvailable) {
+                onUpdateClick
+            }
         }
     ) {
         Text(
