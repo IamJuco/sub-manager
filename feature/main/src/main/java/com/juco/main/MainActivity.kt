@@ -24,10 +24,15 @@ import com.juco.common.util.Logger
 import com.juco.designsystem.theme.SubManagerTheme
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.core.net.toUri
+import com.juco.main.component.OpenAdManager
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+    @Inject
+    lateinit var openAdManager: OpenAdManager
+    private var isFirstShowOpenAd = true
     private lateinit var appUpdateManager: AppUpdateManager
     private var isUpdateAvailable by mutableStateOf(false)
 
@@ -46,6 +51,14 @@ class MainActivity : ComponentActivity() {
         appUpdateManager = AppUpdateManagerFactory.create(this)
         fetchRemoteConfigAndCheckUpdate()
         val appVersionName = getAppVersionName()
+        openAdManager.loadAd(this) {
+            if (isFirstShowOpenAd) {
+                runOnUiThread {
+                    val shown = openAdManager.showAdIfAvailable(this)
+                    if (shown) isFirstShowOpenAd = false
+                }
+            }
+        }
 
         setContent {
             SubManagerTheme {
@@ -54,6 +67,16 @@ class MainActivity : ComponentActivity() {
                     isAppUpdateAvailable = isUpdateAvailable,
                     onUpdateClick = { movePlayStore() }
                 )
+            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (isFirstShowOpenAd) {
+            val shown = openAdManager.showAdIfAvailable(this)
+            if (shown) {
+                isFirstShowOpenAd = false
             }
         }
     }
