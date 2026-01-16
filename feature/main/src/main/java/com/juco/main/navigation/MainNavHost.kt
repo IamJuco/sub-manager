@@ -30,32 +30,10 @@ fun MainNavHost(
     NavHost(
         navController = navigator.navController,
         startDestination = navigator.startDestination,
-        enterTransition = {
-            slideIntoContainer(
-                towards = AnimatedContentTransitionScope.SlideDirection.Left,
-                animationSpec = tween(TIME_DURATION)
-            )
-        },
-        exitTransition = {
-            slideOutOfContainer(
-                towards = AnimatedContentTransitionScope.SlideDirection.Left,
-                animationSpec = tween(TIME_DURATION),
-                targetOffset = { fullWidth -> fullWidth / 3 }
-            )
-        },
-        popEnterTransition = {
-            slideIntoContainer(
-                towards = AnimatedContentTransitionScope.SlideDirection.Right,
-                animationSpec = tween(TIME_DURATION),
-                initialOffset = { fullWidth -> fullWidth / 3 }
-            )
-        },
-        popExitTransition = {
-            slideOutOfContainer(
-                towards = AnimatedContentTransitionScope.SlideDirection.Right,
-                animationSpec = tween(TIME_DURATION)
-            )
-        }
+        enterTransition = { EnterTransition.None },
+        exitTransition = { ExitTransition.None },
+        popEnterTransition = { EnterTransition.None },
+        popExitTransition = { ExitTransition.None }
     ) {
         homeNavGraph(
             padding = padding,
