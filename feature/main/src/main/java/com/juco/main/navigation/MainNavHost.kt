@@ -1,8 +1,10 @@
 package com.juco.main.navigation
 
 import android.content.Context
+import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
@@ -12,6 +14,8 @@ import com.juco.subscription_add.add.navigation.subscriptionAddNavGraph
 import com.juco.subscription_add.intro.navigation.subscriptionAddIntroNavGraph
 import com.juco.subscription_detail.navigation.subscriptionDetailNavGraph
 import com.juco.subscription_edit.navigation.subscriptionEditNavGraph
+
+private const val TIME_DURATION = 300
 
 @Composable
 fun MainNavHost(
@@ -26,10 +30,32 @@ fun MainNavHost(
     NavHost(
         navController = navigator.navController,
         startDestination = navigator.startDestination,
-        enterTransition = { EnterTransition.None },
-        exitTransition = { ExitTransition.None },
-        popEnterTransition = { EnterTransition.None },
-        popExitTransition = { ExitTransition.None }
+        enterTransition = {
+            slideIntoContainer(
+                towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                animationSpec = tween(TIME_DURATION)
+            )
+        },
+        exitTransition = {
+            slideOutOfContainer(
+                towards = AnimatedContentTransitionScope.SlideDirection.Left,
+                animationSpec = tween(TIME_DURATION),
+                targetOffset = { fullWidth -> fullWidth / 3 }
+            )
+        },
+        popEnterTransition = {
+            slideIntoContainer(
+                towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                animationSpec = tween(TIME_DURATION),
+                initialOffset = { fullWidth -> fullWidth / 3 }
+            )
+        },
+        popExitTransition = {
+            slideOutOfContainer(
+                towards = AnimatedContentTransitionScope.SlideDirection.Right,
+                animationSpec = tween(TIME_DURATION)
+            )
+        }
     ) {
         homeNavGraph(
             padding = padding,
