@@ -8,8 +8,12 @@ import timber.log.Timber
 import javax.inject.Inject
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
+import com.google.android.gms.ads.MobileAds
 import com.juco.work.NotificationUtil
 import com.juco.work.SubscriptionWorkerUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @HiltAndroidApp
 class SubManagerApplication : Application(), Configuration.Provider {
@@ -26,6 +30,10 @@ class SubManagerApplication : Application(), Configuration.Provider {
         initTimber()
         NotificationUtil.createNotificationChannel(this)
         SubscriptionWorkerUtil.enqueueDailyWork(this)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            MobileAds.initialize(this@SubManagerApplication) {}
+        }
     }
 
     private fun initTimber() {
