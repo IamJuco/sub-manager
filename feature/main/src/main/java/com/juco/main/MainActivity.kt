@@ -32,7 +32,6 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var openAdManager: OpenAdManager
-    private var isFirstShowOpenAd = true
     private lateinit var appUpdateManager: AppUpdateManager
     private var isUpdateAvailable by mutableStateOf(false)
 
@@ -52,11 +51,8 @@ class MainActivity : ComponentActivity() {
         fetchRemoteConfigAndCheckUpdate()
         val appVersionName = getAppVersionName()
         openAdManager.loadAd(this) {
-            if (isFirstShowOpenAd) {
-                runOnUiThread {
-                    val shown = openAdManager.showAdIfAvailable(this)
-                    if (shown) isFirstShowOpenAd = false
-                }
+            runOnUiThread {
+                openAdManager.showDailyOpenAd(this)
             }
         }
 
@@ -65,7 +61,8 @@ class MainActivity : ComponentActivity() {
                 MainScreen(
                     appVersion = appVersionName,
                     isAppUpdateAvailable = isUpdateAvailable,
-                    onUpdateClick = { movePlayStore() }
+                    onUpdateClick = { movePlayStore() },
+                    showRandomOpenAd = { openAdManager.showRandomOpenAd(this) }
                 )
             }
         }
@@ -73,12 +70,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onStart() {
         super.onStart()
-        if (isFirstShowOpenAd) {
-            val shown = openAdManager.showAdIfAvailable(this)
-            if (shown) {
-                isFirstShowOpenAd = false
-            }
-        }
+        openAdManager.showDailyOpenAd(this)
     }
 
     override fun onResume() {
@@ -189,7 +181,7 @@ class MainActivity : ComponentActivity() {
                     "https://play.google.com/store/apps/details?id=$appPackageName".toUri()
                 )
             )
-            Logger.e("0526MovePlayStore", "playstore 진입 실패 : $e")
+            Logger.e("0526MovePlayStore", "앱 플레이스토어 진입 실패 : $e")
         }
     }
 }
