@@ -15,5 +15,7 @@ dependencies {
     implementation(projects.core.common)
     implementation(projects.domain.local)
 
+    implementation(libs.coil.compose)
+    implementation(libs.coil.core)
     implementation(libs.androidx.navigation.compose)
 }
