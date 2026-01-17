@@ -52,6 +52,7 @@ firebaseCrashlyticsPlugin = "2.9.9"
 playAppUpdate = "2.1.0"
 admob = "24.9.0"
 
+coil = "2.7.0"
 
 [libraries]
 ## androidx
@@ -63,7 +64,6 @@ androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecyc
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidxAppCompat" }
 androidx-datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "androidxDatastore" }
-androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "androidxRoomCompiler" }
 androidx-multidex = { group = "androidx.multidex", name = "multidex", version.ref = "androidxMultidex" }
 androidx-browser = { module = "androidx.browser:browser", version.ref = "browser" }
 androidx-lifecycle-process = { group = "androidx.lifecycle", name = "lifecycle-process", version.ref = "lifecycle" }
@@ -140,6 +140,10 @@ firebase-config = { group = "com.google.firebase", name = "firebase-config-ktx" 
 play-app-update = { group = "com.google.android.play", name = "app-update", version.ref = "playAppUpdate" }
 play-app-update-ktx = { group = "com.google.android.play", name = "app-update-ktx", version.ref = "playAppUpdate" }
 play-services-ads = { module = "com.google.android.gms:play-services-ads", version.ref = "admob" }
+
+## Coil
+coil-core = { module = "io.coil-kt:coil", version.ref = "coil" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 
 [bundles]
 coroutine = [
