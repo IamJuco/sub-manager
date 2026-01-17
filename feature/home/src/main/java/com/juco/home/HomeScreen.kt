@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
@@ -37,7 +36,8 @@ fun HomeRoute(
     padding: PaddingValues,
     viewModel: HomeViewModel = hiltViewModel(),
     navigateToSubscriptionAddIntro: () -> Unit,
-    navigateToSubscriptionDetail: (Long) -> Unit
+    navigateToSubscriptionDetail: (Long) -> Unit,
+    showRandomOpenAd: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -59,7 +59,8 @@ fun HomeRoute(
                 subscriptionList = state.subscriptionList,
                 nextPaymentInfo = state.nextPaymentInfo,
                 navigateToSubscriptionAddIntro = navigateToSubscriptionAddIntro,
-                navigateToSubscriptionDetail = navigateToSubscriptionDetail
+                navigateToSubscriptionDetail = navigateToSubscriptionDetail,
+                showRandomOpenAd = showRandomOpenAd
             )
         }
     }
@@ -72,7 +73,8 @@ fun HomeScreen(
     navigateToSubscriptionAddIntro: () -> Unit,
     navigateToSubscriptionDetail: (Long) -> Unit,
     subscriptionList: List<SubscriptionInfo> = emptyList(),
-    nextPaymentInfo: NextPaymentInfo? = null
+    nextPaymentInfo: NextPaymentInfo? = null,
+    showRandomOpenAd: () -> Unit
 ) {
     val BOTTOM_BAR_HEIGHT = 48.dp
     val FAB_MARGIN = 16.dp
@@ -134,7 +136,10 @@ fun HomeScreen(
                 .padding(bottom = BOTTOM_BAR_HEIGHT + FAB_MARGIN),
         ) {
             SubManagerFloatingButton(
-                onClick = navigateToSubscriptionAddIntro
+                onClick = {
+                    showRandomOpenAd()
+                    navigateToSubscriptionAddIntro()
+                }
             )
         }
     }
@@ -182,7 +187,8 @@ private fun HomeScreenPreview() {
             subscriptionList = dummyList,
             nextPaymentInfo = dummyNextPayment,
             navigateToSubscriptionAddIntro = {},
-            navigateToSubscriptionDetail = {}
+            navigateToSubscriptionDetail = {},
+            showRandomOpenAd = {}
         )
     }
 }

@@ -26,7 +26,8 @@ fun MainScreen(
     context: Context = LocalContext.current,
     appVersion: String,
     isAppUpdateAvailable: Boolean,
-    onUpdateClick: () -> Unit
+    onUpdateClick: () -> Unit,
+    showRandomOpenAd: () -> Unit
 ) {
     val lifecycleScope = LocalLifecycleOwner.current.lifecycleScope
     val snackBarHostState = remember { SnackbarHostState() }
@@ -50,7 +51,8 @@ fun MainScreen(
                 context = context,
                 appVersion = appVersion,
                 isAppUpdateAvailable = isAppUpdateAvailable,
-                onUpdateClick = onUpdateClick
+                onUpdateClick = onUpdateClick,
+                showRandomOpenAd = showRandomOpenAd
             )
         },
         bottomBar = {

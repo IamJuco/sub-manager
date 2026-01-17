@@ -1,10 +1,8 @@
 package com.juco.main.navigation
 
 import android.content.Context
-import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
@@ -15,8 +13,6 @@ import com.juco.subscription_add.intro.navigation.subscriptionAddIntroNavGraph
 import com.juco.subscription_detail.navigation.subscriptionDetailNavGraph
 import com.juco.subscription_edit.navigation.subscriptionEditNavGraph
 
-private const val TIME_DURATION = 300
-
 @Composable
 fun MainNavHost(
     navigator: MainNavigator,
@@ -25,7 +21,8 @@ fun MainNavHost(
     context: Context,
     appVersion: String,
     isAppUpdateAvailable: Boolean,
-    onUpdateClick: () -> Unit
+    onUpdateClick: () -> Unit,
+    showRandomOpenAd: () -> Unit
 ) {
     NavHost(
         navController = navigator.navController,
@@ -38,7 +35,8 @@ fun MainNavHost(
         homeNavGraph(
             padding = padding,
             navigateToSubscriptionAddIntro = navigator::navigateToSubscriptionAddIntro,
-            navigateToSubscriptionDetail = navigator::navigateToSubscriptionDetail
+            navigateToSubscriptionDetail = navigator::navigateToSubscriptionDetail,
+            showRandomOpenAd = showRandomOpenAd
         )
         subscriptionAddIntroNavGraph(
             padding = padding,

@@ -15,13 +15,15 @@ fun NavController.navigateToHome(navOptions: NavOptions) {
 fun NavGraphBuilder.homeNavGraph(
     padding: PaddingValues,
     navigateToSubscriptionAddIntro: () -> Unit,
-    navigateToSubscriptionDetail: (Long) -> Unit
+    navigateToSubscriptionDetail: (Long) -> Unit,
+    showRandomOpenAd: () -> Unit
 ) {
     composable<MainRouteModel.Home> { backStackEntry ->
         HomeRoute(
             padding = padding,
             navigateToSubscriptionAddIntro = navigateToSubscriptionAddIntro,
-            navigateToSubscriptionDetail = navigateToSubscriptionDetail
+            navigateToSubscriptionDetail = navigateToSubscriptionDetail,
+            showRandomOpenAd = showRandomOpenAd
         )
     }
 }
