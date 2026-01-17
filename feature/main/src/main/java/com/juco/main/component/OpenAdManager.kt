@@ -19,7 +19,8 @@ import kotlin.random.Random
 import androidx.core.content.edit
 
 private const val ADMOB_OPEN_ID = BuildConfig.ADMOB_OPEN_ID
-private const val ADMOB_OPEN_PERCENT = 20
+private const val ADMOB_OPEN_PERCENT = 20 // 광고 클릭 시 Show 확률
+private const val OPEN_AD_HOUR = 4L // 다음 광고 띄우는 주기
 
 @Singleton
 class OpenAdManager @Inject constructor(
@@ -103,12 +104,12 @@ class OpenAdManager @Inject constructor(
     }
 
     private fun isAdAvailable(): Boolean {
-        return appOpenAd != null && wasLoadTimeLessThanNHoursAgo(4)
+        return appOpenAd != null && nextOpenAdTimes()
     }
 
-    private fun wasLoadTimeLessThanNHoursAgo(numHours: Long): Boolean {
+    private fun nextOpenAdTimes(): Boolean {
         val dateDifference = Date().time - loadTime
         val numMilliSecondsPerHour: Long = 3600000
-        return dateDifference < (numMilliSecondsPerHour * numHours)
+        return dateDifference < (numMilliSecondsPerHour * OPEN_AD_HOUR)
     }
 }
