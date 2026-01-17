@@ -7,19 +7,29 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.appopen.AppOpenAd
-import com.juco.common.util.Logger
 import com.juco.submanager.feature.main.BuildConfig
 import java.util.Date
 import javax.inject.Inject
 import javax.inject.Singleton
+import android.content.SharedPreferences
+import dagger.hilt.android.qualifiers.ApplicationContext
+import java.text.SimpleDateFormat
+import java.util.Locale
+import kotlin.random.Random
+import androidx.core.content.edit
+
+private const val ADMOB_OPEN_ID = BuildConfig.ADMOB_OPEN_ID
+private const val ADMOB_OPEN_PERCENT = 20
 
 @Singleton
-class OpenAdManager @Inject constructor() {
+class OpenAdManager @Inject constructor(
+    @ApplicationContext private val context: Context
+) {
     private var appOpenAd: AppOpenAd? = null
     private var isLoadingAd = false
     var isShowingAd = false
     private var loadTime: Long = 0
-    private val ADMOB_OPEN_ID = BuildConfig.ADMOB_OPEN_ID
+    private val prefs: SharedPreferences = context.getSharedPreferences("open_ad_prefs", Context.MODE_PRIVATE)
 
     fun loadAd(context: Context, onAdLoaded: (() -> Unit)? = null) {
         if (isLoadingAd || isAdAvailable()) return
@@ -28,7 +38,6 @@ class OpenAdManager @Inject constructor() {
 
         AppOpenAd.load(context, ADMOB_OPEN_ID, request, object : AppOpenAd.AppOpenAdLoadCallback() {
             override fun onAdLoaded(ad: AppOpenAd) {
-                Logger.d("AdMob", "광고 로드 성공")
                 appOpenAd = ad
                 isLoadingAd = false
                 loadTime = Date().time
@@ -36,13 +45,12 @@ class OpenAdManager @Inject constructor() {
             }
 
             override fun onAdFailedToLoad(error: LoadAdError) {
-                Logger.e("AdMob", "광고 로드 실패: ${error.message}")
                 isLoadingAd = false
             }
         })
     }
 
-    fun showAdIfAvailable(activity: Activity): Boolean {
+    private fun showAdIfAvailable(activity: Activity): Boolean {
         if (isShowingAd) return false
 
         if (!isAdAvailable()) {
@@ -71,6 +79,27 @@ class OpenAdManager @Inject constructor() {
         isShowingAd = true
         appOpenAd?.show(activity)
         return true
+    }
+
+    fun showDailyOpenAd(activity: Activity): Boolean {
+        val todayDate = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(Date())
+        val lastShownDate = prefs.getString("last_ad_date", "")
+
+        if (todayDate == lastShownDate) {
+            return false
+        }
+        val isShown = showAdIfAvailable(activity)
+        if (isShown) {
+            prefs.edit { putString("last_ad_date", todayDate) }
+        }
+        return isShown
+    }
+
+    fun showRandomOpenAd(activity: Activity) {
+        val randomValue = Random.nextInt(1, 101)
+        if (randomValue <= ADMOB_OPEN_PERCENT) {
+            showAdIfAvailable(activity)
+        }
     }
 
     private fun isAdAvailable(): Boolean {
