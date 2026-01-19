@@ -1,5 +1,6 @@
 package com.juco.subscription_add.intro.component
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -11,11 +12,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.juco.common.model.SubscriptionQuickStartInfo
 import com.juco.designsystem.theme.SubManagerTheme
+import com.juco.subscription_add.intro.dataset.QuickStartDefaultItem
 import java.text.NumberFormat
 
 @Composable
@@ -35,19 +39,22 @@ fun SubscriptionItem(
             ),
         verticalAlignment = Alignment.CenterVertically
     ) {
+        Spacer(modifier = Modifier.width(16.dp))
         Box(
             modifier = Modifier
                 .size(72.dp)
                 .clip(CircleShape)
-                .background(SubManagerTheme.colors.primaryBackground),
+                .background(SubManagerTheme.colors.primaryBackground)
+                .border(1.dp, SubManagerTheme.colors.secondaryText.copy(alpha = 0.2f), CircleShape),
             contentAlignment = Alignment.Center
         ) {
-            Text(
-                text = subscription.name.take(1),
-                style = SubManagerTheme.typography.h3SemiBold,
-                color = SubManagerTheme.colors.primaryText,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+            Image(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(14.dp),
+                painter = painterResource(id = QuickStartDefaultItem.getResIdByKey(subscription.thumbnail)),
+                contentDescription = null,
+                contentScale = ContentScale.Fit
             )
         }
 
