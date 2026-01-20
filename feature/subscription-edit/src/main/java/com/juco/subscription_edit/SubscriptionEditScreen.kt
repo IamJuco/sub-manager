@@ -76,7 +76,8 @@ fun SubscriptionEditRoute(
                     padding = padding,
                     onPopBackStack = onPopBackStack,
                     subscription = state.subscription,
-                    onUpdateClick = viewModel::updateSubscription
+                    onUpdateClick = viewModel::updateSubscription,
+                    onShowSnackBar = onShowSnackBar
                 )
 
                 if (state.isUpdating) {
@@ -93,13 +94,15 @@ fun SubscriptionEditScreen(
     padding: PaddingValues,
     onPopBackStack: () -> Unit,
     subscription: SubscriptionInfo,
-    onUpdateClick: (SubscriptionInfo) -> Unit
+    onUpdateClick: (SubscriptionInfo) -> Unit,
+    onShowSnackBar: (String) -> Unit
 ) {
     var name by remember(subscription) { mutableStateOf(subscription.name ?: "") }
     var description by remember(subscription) { mutableStateOf(subscription.description ?: "") }
     var price by remember(subscription) { mutableStateOf(subscription.price?.toString() ?: "") }
     var selectedDate by remember(subscription) { mutableLongStateOf(subscription.paymentDay ?: 0L) }
     var paymentCycle by remember(subscription) { mutableStateOf(subscription.toPaymentCycle()) }
+    var thumbnail by remember(subscription) { mutableStateOf(subscription.thumbnail ?: "") }
 
     Column(
         modifier = modifier
@@ -119,7 +122,9 @@ fun SubscriptionEditScreen(
         Spacer(Modifier.height(32.dp))
 
         ProfileSection(
-            subscription = subscription
+            thumbnail = thumbnail,
+            onClickThumbnailChange = { thumbnail = it },
+            onShowSnackBar = onShowSnackBar
         )
 
         Spacer(Modifier.height(32.dp))
@@ -173,7 +178,7 @@ fun SubscriptionEditScreen(
                 onUpdateClick(
                     SubscriptionInfo(
                         subId = subscription.subId,
-                        thumbnail = subscription.thumbnail,
+                        thumbnail = thumbnail,
                         name = name,
                         description = description,
                         price = price.toLongOrNull() ?: 0L,
@@ -198,7 +203,8 @@ private fun SubscriptionEditScreenPreview() {
             padding = PaddingValues(),
             onPopBackStack = {},
             subscription = SubscriptionInfo(),
-            onUpdateClick = {}
+            onUpdateClick = {},
+            onShowSnackBar = {}
         )
     }
 }
