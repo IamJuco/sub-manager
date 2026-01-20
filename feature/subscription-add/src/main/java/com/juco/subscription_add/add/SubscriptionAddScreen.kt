@@ -227,6 +227,7 @@ fun SubscriptionAddScreen(
                             onSaveClick(
                                 SubscriptionAdd(
                                     name = name,
+                                    thumbnail = quickStartInfo?.thumbnail,
                                     price = price.toLongOrNull(),
                                     paymentDay = selectedDate,
                                     paymentCycleType = paymentCycle.type.name,

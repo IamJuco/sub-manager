@@ -18,8 +18,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.juco.common.model.SubscriptionQuickStartInfo
+import com.juco.designsystem.util.QuickStartDefaultItem
 import com.juco.designsystem.theme.SubManagerTheme
-import com.juco.subscription_add.intro.dataset.QuickStartDefaultItem
 import java.text.NumberFormat
 
 @Composable

@@ -36,7 +36,7 @@ class SubscriptionAddViewModel @Inject constructor(
             runCatching {
                 val subscription = Subscription(
                     name = subscriptionAdd.name ?: "",
-                    thumbnail = "",
+                    thumbnail = subscriptionAdd.thumbnail ?: "",
                     price = subscriptionAdd.price ?: 0,
                     paymentDay = subscriptionAdd.paymentDay ?: 0,
                     paymentCycleType = subscriptionAdd.paymentCycleType ?: "",
