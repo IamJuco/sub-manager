@@ -62,7 +62,6 @@ fun HeaderSection(
                     )
                 } else {
                     AsyncImage(
-                        modifier = Modifier.padding(14.dp),
                         model = subscription.thumbnail,
                         contentDescription = null,
                         placeholder = painterResource(R.drawable.ic_app_logo),
