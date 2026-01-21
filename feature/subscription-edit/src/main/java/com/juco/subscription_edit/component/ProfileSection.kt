@@ -1,6 +1,5 @@
 package com.juco.subscription_edit.component
 
-import android.content.Intent
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -31,6 +30,7 @@ import com.juco.common.util.Logger
 import com.juco.designsystem.util.QuickStartDefaultItem
 import com.juco.designsystem.theme.SubManagerTheme
 import com.juco.submanager.core.designsystem.R
+import com.juco.subscription_edit.util.saveImageToAppStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -47,16 +47,17 @@ fun ProfileSection(
     val photoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia()
     ) { uri ->
-        uri?.let {
+        uri?.let { selectedUri ->
             coroutineScope.launch(Dispatchers.IO) {
-                runCatching {
-                    val flag = Intent.FLAG_GRANT_READ_URI_PERMISSION
-                    context.contentResolver.takePersistableUriPermission(it, flag)
-                }.onFailure {
-                    Logger.e("0526ProfileSection", "갤러리에서 사진 가져오기 실패")
-                    onShowSnackBar("갤러리를 불러오는데 실패했습니다.")
+                val savedFile = saveImageToAppStorage(context, selectedUri)
+                if (savedFile != null) {
+                    onClickThumbnailChange(savedFile.absolutePath)
+                } else {
+                    Logger.e("0526ProfileSection", "이미지 복사 실패")
+                    launch(Dispatchers.Main) {
+                        onShowSnackBar("이미지를 불러오는데 실패했습니다.")
+                    }
                 }
-                onClickThumbnailChange(it.toString())
             }
         }
     }
